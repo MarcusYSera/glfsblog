@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import BlogShow from './BlogShow';
+
 const BlogList = () => {
   return (
     <div className="ui divider">
@@ -19,6 +21,9 @@ const BlogList = () => {
       <Link to="/blogs/delete" className="item">
         DeleteBlog
       </Link>
+      <div>
+        <BlogShow />
+      </div>
     </div>
   );
 };
