@@ -8,6 +8,8 @@ import BlogCreate from './blogs/BlogCreate';
 import BlogEdit from './blogs/BlogEdit';
 import BlogDelete from './blogs/BlogDelete';
 
+import './global.css';
+
 const App = () => {
   return (
     <div>
