@@ -4,8 +4,15 @@ import faker from 'faker';
 
 const BlogShow = () => {
   return (
-    <div className="ui card">
-      <div className="image">
+    <div className="ui massive horizontal selection list">
+      <div className="item">
+        <img className="ui avatar image" src={faker.image.avatar()} alt="blog pic" />
+        <div className="content">
+          <div className="header">Blog Title</div>
+          short description
+        </div>
+      </div>
+      {/* <div className="image">
         <img src={faker.image.avatar()} alt="blog pic" />
       </div>
       <div className="content">
@@ -20,7 +27,7 @@ const BlogShow = () => {
             Views: 22
           </Link>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
