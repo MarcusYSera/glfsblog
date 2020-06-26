@@ -8,7 +8,7 @@ const Header = () => {
         App Icon
       </Link>
       <Link to="/" className="item">
-        Home
+        <i className="home icon" />
       </Link>
     </div>
   );
