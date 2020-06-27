@@ -4,12 +4,18 @@ import React from 'react';
 class Login extends React.Component {
   state = { answer: '' };
 
+  onFormSubmit = (e) => {
+    e.preventDefault();
+    const { answer } = this.state;
+    console.log(answer);
+  };
+
   render() {
     const { answer } = this.state;
     return (
       <div>
         <h1>Login</h1>
-        <form onSubmit={console.log(answer)}>
+        <form onSubmit={this.onFormSubmit}>
           Email:
           <input
             type="text"
