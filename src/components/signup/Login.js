@@ -2,16 +2,16 @@ import React from 'react';
 // import InputField from './InputField';
 
 class Login extends React.Component {
-  state = { answer: '' };
+  state = { email: '', pass: '' };
 
   onFormSubmit = (e) => {
     e.preventDefault();
-    const { answer } = this.state;
-    console.log(answer);
+    const { email, pass } = this.state;
+    console.log(email, pass);
   };
 
   render() {
-    const { answer } = this.state;
+    const { email, pass } = this.state;
     return (
       <div>
         <h1>Login</h1>
@@ -19,8 +19,14 @@ class Login extends React.Component {
           Email:
           <input
             type="text"
-            value={answer}
-            onChange={(e) => this.setState({ answer: e.target.value })}
+            value={email}
+            onChange={(e) => this.setState({ email: e.target.value })}
+          />
+          Password:
+          <input
+            type="text"
+            value={pass}
+            onChange={(e) => this.setState({ pass: e.target.value })}
           />
           <input type="submit" value="Submit" />
         </form>
