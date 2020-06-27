@@ -23,6 +23,13 @@ const BlogList = () => {
       </Link>
       <div>
         <BlogShow />
+        <BlogShow />
+        <BlogShow />
+        <BlogShow />
+        <BlogShow />
+        <BlogShow />
+        <BlogShow />
+        <BlogShow />
       </div>
     </div>
   );

@@ -7,6 +7,10 @@ import BlogList from './blogs/BlogList';
 import BlogCreate from './blogs/BlogCreate';
 import BlogEdit from './blogs/BlogEdit';
 import BlogDelete from './blogs/BlogDelete';
+import Login from './signup/Login';
+import SignUp from './signup/SignUp';
+
+import './global.css';
 
 const App = () => {
   return (
@@ -19,6 +23,8 @@ const App = () => {
           <Route path="/blogs/edit" component={BlogEdit} />
           <Route path="/blogs/view" component={BlogShow} />
           <Route path="/blogs/delete" component={BlogDelete} />
+          <Route path="/signup/login" component={Login} />
+          <Route path="/signup/signup" component={SignUp} />
         </div>
       </BrowserRouter>
     </div>
