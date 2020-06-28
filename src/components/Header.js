@@ -12,7 +12,6 @@ const Header = () => {
         {/* <i className="home icon" /> */}
       </Link>
       <Link to="/signup/Login">Login</Link>
-      <Link to="/signup/SignUp">Sign Up</Link>
     </div>
   );
 };
