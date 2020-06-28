@@ -1,16 +1,30 @@
 import React from 'react';
 
 class SignUp extends React.Component {
-  state = { fname: '', lname: '', gender: '', email: '', pword: '' };
+  state = { fname: '', lname: '', male: false, female: false, email: '', pword: '' };
 
   onFormSubmit = (event) => {
     event.preventDefault();
-    const { fname, lname, gender, email, pword } = this.state;
-    console.log(`${fname}${lname}${gender}${email}${pword}`);
+    const { fname, lname, male, female, email, pword } = this.state;
+    console.log(`${fname}${lname}${male}${female}${email}${pword}`);
+  };
+
+  handleCheckboxChange = (e) => {
+    const { target } = e;
+    let value = false;
+    if (target.name === 'male') {
+      value = target.name === 'male' ? target.checked : target.value;
+    } else if (target.name === 'female') {
+      value = target.name === 'female' ? target.checked : target.value;
+    }
+    const { name } = target;
+    this.setState({
+      [name]: value,
+    });
   };
 
   render() {
-    const { fname, lname, gender, email, pword } = this.state;
+    const { fname, lname, male, female, email, pword } = this.state;
     return (
       <div className="ui middle aligned center aligned grid">
         <div className="column">
@@ -39,8 +53,9 @@ class SignUp extends React.Component {
                   <input
                     type="checkbox"
                     name="male"
-                    value={gender}
-                    onChange={(e) => this.setState({ gender: e.target.value })}
+                    value={male}
+                    checked={male}
+                    onChange={this.handleCheckboxChange}
                   />
                 </label>
                 <label htmlFor="female">
@@ -48,8 +63,9 @@ class SignUp extends React.Component {
                   <input
                     type="checkbox"
                     name="female"
-                    value={gender}
-                    onChange={(e) => this.setState({ gender: e.target.value })}
+                    value={female}
+                    checked={female}
+                    onChange={this.handleCheckboxChange}
                   />
                 </label>
               </div>
