@@ -11,7 +11,7 @@ const Header = () => {
         Home
         {/* <i className="home icon" /> */}
       </Link>
-      <Link to="/signup/Login" className="ui right floated header">
+      <Link to="/signup/Login" className="ui right floated button">
         Login
       </Link>
     </div>

@@ -34,12 +34,24 @@ class SignUp extends React.Component {
                 />
               </div>
               <div className="field">
-                <input
-                  type="text"
-                  value={gender}
-                  placeholder="Gender"
-                  onChange={(event) => this.setState({ gender: event.target.value })}
-                />
+                <label htmlFor="male">
+                  Male
+                  <input
+                    type="checkbox"
+                    name="male"
+                    value={gender}
+                    onChange={(e) => this.setState({ gender: e.target.value })}
+                  />
+                </label>
+                <label htmlFor="female">
+                  Female
+                  <input
+                    type="checkbox"
+                    name="female"
+                    value={gender}
+                    onChange={(e) => this.setState({ gender: e.target.value })}
+                  />
+                </label>
               </div>
               <div className="field">
                 <input
