@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import faker from 'faker';
 
 const BlogShow = () => {
   return (
     <div className="ui massive horizontal selection list">
       <div className="item">
-        <Link to="/blogs/view" className="ui link cards">
+        <div className="ui link cards">
           <div className="card">
             <img className="image" src={faker.image.avatar()} alt="blog pic" />
             <div className="content">
@@ -20,7 +20,7 @@ const BlogShow = () => {
               22 views
             </div>
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   );

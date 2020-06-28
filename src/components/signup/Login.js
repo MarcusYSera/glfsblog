@@ -7,7 +7,7 @@ class Login extends React.Component {
   onFormSubmit = (e) => {
     e.preventDefault();
     const { email, pass } = this.state;
-    console.log(email, pass);
+    console.log(`email: ${email} & password: ${pass}`);
   };
 
   render() {
