@@ -1,29 +1,22 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
-import faker from 'faker';
+// import faker from 'faker';
+import { connect } from 'react-redux';
 
-const BlogShow = () => {
+const BlogShow = ({ blog }) => {
+  if (!blog) {
+    return <div>no song selected, please select song</div>;
+  }
   return (
-    <div className="ui massive horizontal selection list">
-      <div className="item">
-        <div className="ui link cards">
-          <div className="card">
-            <img className="image" src={faker.image.avatar()} alt="blog pic" />
-            <div className="content">
-              <div className="header">Blog Title</div>
-              <div className="meta">{faker.address.city()}</div>
-              <div className="description">short description</div>
-            </div>
-            <div className="extra content">
-              <span className="right floated">date added</span>
-              <i className="eye icon" />
-              22 views
-            </div>
-          </div>
-        </div>
-      </div>
+    <div>
+      <h1>{blog.title}</h1>
+      <div>{blog.date}</div>
     </div>
   );
 };
 
-export default BlogShow;
+const mapStateToProps = (state) => {
+  return { blog: state.selectedBlog };
+};
+
+export default connect(mapStateToProps)(BlogShow);

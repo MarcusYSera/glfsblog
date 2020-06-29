@@ -17,7 +17,7 @@ const App = () => {
   return (
     <div className="ui container grid">
       <div className="ui row">
-        <div className="column eight wide">
+        <div className="column wide">
           <BrowserRouter>
             <div>
               <Header />

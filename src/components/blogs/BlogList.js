@@ -8,6 +8,7 @@ import { selectBlog } from '../../actions';
 
 class BlogList extends Component {
   renderList() {
+    // const { blogs, selectBlog } = props;
     return this.props.blogs.map((blog) => {
       return (
         <div className="item" key={blog.title}>
@@ -52,7 +53,7 @@ class BlogList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
+  console.log(state);
   return { blogs: state.blogs };
 };
 
