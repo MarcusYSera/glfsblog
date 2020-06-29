@@ -4,14 +4,16 @@ import { Link } from 'react-router-dom';
 const Header = () => {
   return (
     <div className="ui segment">
-      <Link to="/" className="ui left aligned header">
-        App Icon
+      <Link to="/" className="ui header">
+        <i className="circle icon red" />
       </Link>
-      <Link to="/" className="ui right aligned header">
+      <Link to="/" className="ui right floated header">
         Home
         {/* <i className="home icon" /> */}
       </Link>
-      <Link to="/signup/Login">Login</Link>
+      <Link to="/signup/Login" className="ui right floated button">
+        Login
+      </Link>
     </div>
   );
 };
