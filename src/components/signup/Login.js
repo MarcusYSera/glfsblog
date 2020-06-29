@@ -22,18 +22,20 @@ class Login extends React.Component {
             <div className="ui stacked segment">
               <div className="field">
                 <input
-                  type="text"
+                  type="email"
                   value={email}
                   placeholder="Email"
                   onChange={(e) => this.setState({ email: e.target.value })}
+                  required
                 />
               </div>
               <div className="field">
                 <input
-                  type="text"
+                  type="password"
                   value={pass}
                   placeholder="Password"
                   onChange={(e) => this.setState({ pass: e.target.value })}
+                  required
                 />
               </div>
               <input type="submit" value="Submit" />
