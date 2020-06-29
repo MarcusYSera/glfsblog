@@ -30,7 +30,6 @@ class SignUp extends React.Component {
     const month = `${today.getFullYear().toString()}-${`0${today.getMonth() + 1}`
       .slice(-2)
       .toString()}`;
-    console.log(month);
     // console.log(new Intl.DateTimeFormat('en-US', { month: 'long' }).format(today));
     return (
       <div className="ui middle aligned center aligned grid">
