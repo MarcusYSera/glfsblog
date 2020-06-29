@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class SignUp extends React.Component {
+class SignUp extends Component {
   state = { fname: '', lname: '', male: false, female: false, email: '', pword: '' };
 
   onFormSubmit = (event) => {

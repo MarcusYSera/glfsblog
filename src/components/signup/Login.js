@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 // import InputField from './InputField';
 
-class Login extends React.Component {
+class Login extends Component {
   state = { email: '', pass: '' };
 
   onFormSubmit = (e) => {
