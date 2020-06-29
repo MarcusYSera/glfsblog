@@ -18,7 +18,7 @@ const selectedBlogReducer = (selectedBlog = null, action) => {
   return selectedBlog;
 };
 
-combineReducers({
+export default combineReducers({
   blogs: blogsReducer,
   selectedBlog: selectedBlogReducer,
 });
