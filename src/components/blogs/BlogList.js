@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 
 import { selectBlog } from '../../actions';
 
@@ -8,7 +9,7 @@ import { selectBlog } from '../../actions';
 
 class BlogList extends Component {
   renderList() {
-    // const { blogs, selectBlog } = props;
+    // const { blogs } = this.props;
     return this.props.blogs.map((blog) => {
       return (
         <div className="item" key={blog.title}>
@@ -56,5 +57,15 @@ const mapStateToProps = (state) => {
   console.log(state);
   return { blogs: state.blogs };
 };
+
+// BlogList.propTypes = {
+//   blogs: PropTypes.string,
+//   selectBlog: PropTypes.func,
+// };
+
+// BlogList.defaultProps = {
+//   blogs: '',
+//   selectBlog: () => {},
+// };
 
 export default connect(mapStateToProps, { selectBlog })(BlogList);
