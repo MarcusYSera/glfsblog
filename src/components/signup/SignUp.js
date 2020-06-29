@@ -25,6 +25,12 @@ class SignUp extends React.Component {
 
   render() {
     const { fname, lname, male, female, email, pword } = this.state;
+    const today = new Date();
+    const month = `${today.getFullYear().toString()}-${`0${today.getMonth() + 1}`
+      .slice(-2)
+      .toString()}`;
+    console.log(month);
+    // console.log(new Intl.DateTimeFormat('en-US', { month: 'long' }).format(today));
     return (
       <div className="ui middle aligned center aligned grid">
         <div className="column">
@@ -37,6 +43,7 @@ class SignUp extends React.Component {
                   value={fname}
                   placeholder="First Name"
                   onChange={(e) => this.setState({ fname: e.target.value })}
+                  required
                 />
               </div>
               <div className="field">
@@ -45,6 +52,7 @@ class SignUp extends React.Component {
                   value={lname}
                   placeholder="Last Name"
                   onChange={(event) => this.setState({ lname: event.target.value })}
+                  required
                 />
               </div>
               <div className="field">
@@ -70,19 +78,27 @@ class SignUp extends React.Component {
                 </label>
               </div>
               <div className="field">
+                <label htmlFor="bday">
+                  Birthday:
+                  <input type="month" name="bday" max={month} required/>
+                </label>
+              </div>
+              <div className="field">
                 <input
-                  type="text"
+                  type="email"
                   value={email}
                   placeholder="Email"
                   onChange={(event) => this.setState({ email: event.target.value })}
+                  required
                 />
               </div>
               <div className="field">
                 <input
-                  type="text"
+                  type="password"
                   value={pword}
                   placeholder="Password"
                   onChange={(e) => this.setState({ pword: e.target.value })}
+                  required
                 />
               </div>
               <input type="submit" value="Submit" />
