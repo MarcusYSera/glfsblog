@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import GoogleAuth from '../GoogleAuth';
+
 // import InputField from './InputField';
 
 class Login extends Component {
@@ -41,6 +43,7 @@ class Login extends Component {
               <input type="submit" value="Submit" />
             </div>
           </form>
+          <GoogleAuth />
           <div className="ui message">
             Need an Account? <Link to="/signup/SignUp">Sign Up</Link>
           </div>
