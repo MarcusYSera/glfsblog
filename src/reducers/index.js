@@ -1,6 +1,8 @@
 // Reducers
 
 import { combineReducers } from 'redux';
+import authReducer from './authReducer';
+import { BLOG_SELECTED } from '../actions/types';
 
 const blogsReducer = () => {
   return [
@@ -12,7 +14,7 @@ const blogsReducer = () => {
 };
 
 const selectedBlogReducer = (selectedBlog = null, action) => {
-  if (action.type === 'BLOG_SELECTED') {
+  if (action.type === BLOG_SELECTED) {
     return action.payload;
   }
   return selectedBlog;
@@ -21,4 +23,5 @@ const selectedBlogReducer = (selectedBlog = null, action) => {
 export default combineReducers({
   blogs: blogsReducer,
   selectedBlog: selectedBlogReducer,
+  auth: authReducer,
 });
