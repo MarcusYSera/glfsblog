@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { selectBlog } from '../../actions';
 
@@ -8,18 +9,20 @@ import { selectBlog } from '../../actions';
 
 class BlogList extends Component {
   renderList() {
-    // const { blogs, selectBlog } = props;
-    return this.props.blogs.map((blog) => {
+    const { blogs, selectBlog: sB } = this.props;
+    return blogs.map((blog) => {
       return (
         <div className="item" key={blog.title}>
           <div className="right floated content">
-            <button
-              type="submit"
-              className="ui button primary"
-              onClick={() => this.props.selectBlog(blog)}
-            >
-              Select
-            </button>
+            <Link to="/blogs/view">
+              <button
+                type="submit"
+                className="ui button primary"
+                onClick={() => sB(blog)}
+              >
+                Select
+              </button>
+            </Link>
           </div>
           <div className="content">{blog.title}</div>
         </div>
@@ -28,19 +31,10 @@ class BlogList extends Component {
   }
 
   render() {
-    // console.log(this.props);
     return (
       <div className="ui divider">
         <Link to="/blogs/new" className="item">
           New Blog
-        </Link>
-        <br />
-        <Link to="/blogs/edit" className="item">
-          Edit Blog
-        </Link>
-        <br />
-        <Link to="/blogs/view" className="item">
-          View Blog
         </Link>
         <br />
         <Link to="/blogs/delete" className="item">
@@ -53,8 +47,18 @@ class BlogList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return { blogs: state.blogs };
+};
+
+BlogList.propTypes = {
+  blogs: PropTypes.arrayOf(PropTypes.object),
+  selectBlog: PropTypes.func,
+};
+
+BlogList.defaultProps = {
+  blogs: {},
+  selectBlog() {},
 };
 
 export default connect(mapStateToProps, { selectBlog })(BlogList);
