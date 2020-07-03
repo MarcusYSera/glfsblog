@@ -3,6 +3,7 @@ module.exports ={
     res.send({hi: 'there'});
   },
   create(req, res){
-    
+    console.log(req.body)
+    res.send({ hi: 'there'})
   }
 };
