@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
 module.exports ={
-  greeting(req, res){
+  view(req, res){
     res.send({hi: 'there'});
   },
 
