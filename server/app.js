@@ -6,7 +6,7 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 if (process.env.NODE_ENV !== 'test'){
-  mongoose.connect('mongodb://localhost/glfsblog');
+  mongoose.connect('mongodb+srv://dbUser:9ihi36QWPdh1HMhV@glfsblog.o5glh.mongodb.net/GLFSBlog?retryWrites=true&w=majority');
 }
 
 app.use(bodyParser.json());
