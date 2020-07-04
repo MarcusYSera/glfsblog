@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  email: {
-    type: String,
-    required: true
-  },
   firstName: {
     type: String,
     required: false
@@ -14,7 +10,19 @@ const UserSchema = new Schema({
     type: String,
     required: false
   },
-  current: {
+  gender: {
+    type: String,
+    required: false
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: false
+  },
+  googleSignIn: {
     type: Boolean,
     default: false
   }

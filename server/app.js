@@ -3,10 +3,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require('./routes/routes');
 const app = express();
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 mongoose.Promise = global.Promise;
 if (process.env.NODE_ENV !== 'test'){
-  mongoose.connect('mongodb+srv://dbUser:9ihi36QWPdh1HMhV@glfsblog.o5glh.mongodb.net/GLFSBlog?retryWrites=true&w=majority');
+  mongoose.connect(`mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PSW}@glfsblog.o5glh.mongodb.net/${process.env.MONGODB_DB}?retryWrites=true&w=majority`);
 }
 
 app.use(bodyParser.json());
