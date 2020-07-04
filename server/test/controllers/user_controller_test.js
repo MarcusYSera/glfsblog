@@ -10,7 +10,7 @@ describe('Users controller', ()=>{
     User.count().then(count =>{
       request(app)
       .post('/api/users')
-      .send({ email:'test@test.com'})
+      .send({ email:'mocha@test.com'})
       .end(()=>{
         User.count().then(newCount =>{
           assert(count+1 === newCount);
@@ -19,7 +19,8 @@ describe('Users controller', ()=>{
       });
     })
   });
-  it('PUT to /api/users/id edits an existing user', done =>{
+
+  it('PUT to /api/users/id edits an existing user', done => {
     const user = new User({ email: 'mocha@test.com', current: false});
 
     user.save().then(()=>{
@@ -31,7 +32,23 @@ describe('Users controller', ()=>{
             .then(user =>{
               assert(user.current === true);
               done();
-            })
+            });
+        });
+    });
+  });
+
+  it('DELETE to /api/users/id deletes an existing user', done => {
+    const user = new User({email: 'mocha@test.com'});
+
+    user.save().then(() => {
+      request(app)
+        .delete(`/api/users/${user._id}`)
+        .end(() => {
+          User.findOne({email: 'mocha@test.com'})
+            .then((user) => {
+              assert(user === null);
+              done();
+            });
         });
     });
   });
