@@ -19,4 +19,20 @@ describe('Users controller', ()=>{
       });
     })
   });
+  it('PUT to /api/users/id edits an existing user', done =>{
+    const user = new User({ email: 'mocha@test.com', current: false});
+
+    user.save().then(()=>{
+      request(app)
+        .put(`/api/users/${user._id}`)
+        .send({ current: true})
+        .end(()=>{
+          User.findOne({ email: 'mocha@test.com'})
+            .then(user =>{
+              assert(user.current === true);
+              done();
+            })
+        });
+    });
+  });
 });

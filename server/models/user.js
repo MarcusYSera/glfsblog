@@ -13,6 +13,10 @@ const UserSchema = new Schema({
   lastName: {
     type: String,
     required: false
+  },
+  current: {
+    type: Boolean,
+    default: false
   }
 });
 
