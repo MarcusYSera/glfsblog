@@ -1,6 +1,6 @@
-import { VIEW_USER, CREATE_USER } from '../actions/types';
+import { VIEW_USER } from '../actions/types';
 
-export const showUsers = (state = [], action) => {
+export const showUsersReducers = (state = [], action) => {
   switch (action.type) {
     case VIEW_USER:
       return action.payload;
@@ -8,10 +8,3 @@ export const showUsers = (state = [], action) => {
       return state;
   }
 };
-
-export const createUser = (state = [], action) => {
-  switch (action.type) {
-    case CREATE_USER: 
-      return {}
-  }
-}

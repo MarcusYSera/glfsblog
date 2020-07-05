@@ -2,7 +2,13 @@
 
 import glfsBlogDB from '../apis/glfsBlogDB';
 
-import { BLOG_SELECTED, SIGN_IN, SIGN_OUT, VIEW_USER, CREATE_USER } from './types';
+import {
+  BLOG_SELECTED,
+  SIGN_IN,
+  SIGN_OUT,
+  VIEW_USER,
+  // CREATE_USER
+} from './types';
 
 export const selectBlog = (blog) => {
   return {
@@ -35,9 +41,9 @@ export const viewUser = () => async (dispatch) => {
 };
 
 // create new user
-export const createUserAction = (newUser) => {
-  return {
-    type: CREATE_USER,
-    payload: newUser,
-  };
-};
+// export const createUserAction = (newUser) => {
+//   return {
+//     type: CREATE_USER,
+//     payload: newUser,
+//   };
+// };
