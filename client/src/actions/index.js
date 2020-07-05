@@ -2,7 +2,12 @@
 
 import glfsBlogDB from '../apis/glfsBlogDB';
 
-import { BLOG_SELECTED, SIGN_IN, SIGN_OUT, CREATE_USER, VIEW_USER } from './types';
+import {
+  BLOG_SELECTED,
+  SIGN_IN, SIGN_OUT,
+  // CREATE_USER,
+  VIEW_USER
+} from './types';
 
 export const selectBlog = (blog) => {
   return {
@@ -27,7 +32,7 @@ export const signOut = () => {
 export const viewUser = () => async (dispatch) => {
     const response = await glfsBlogDB.get('/api');
 
-    dispatch({ type: 'VIEW_USER', payload: response });
+    dispatch({ type: VIEW_USER, payload: response.data });
   };
 
 

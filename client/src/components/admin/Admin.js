@@ -6,13 +6,25 @@ class Admin extends Component {
   componentDidMount() {
     this.props.viewUser();
   }
+
+  renderUsers() {
+    return this.props.users.map(user=>{
+      return(
+        <div>
+          <p key={user.id}>Name: {user.firstName} {user.lastName} <br /> email: {user.email}</p>
+          <p></p>
+        </div>
+      )
+    })
+  }
+
   render() {
-    return (
-      <div>
-        <h1>Admin page</h1>
-      </div>
-    );
+    return <div>{this.renderUsers()}</div>
   }
 }
 
-export default connect(null, { viewUser })(Admin);
+const mapStateToProps = (state) => {
+  return { users: state.users };
+};
+
+export default connect(mapStateToProps, { viewUser })(Admin);
