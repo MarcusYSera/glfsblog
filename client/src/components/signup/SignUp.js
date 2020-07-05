@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+
+import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class SignUp extends Component {
   state = {
@@ -16,9 +17,10 @@ class SignUp extends Component {
   onFormSubmit = (event) => {
     event.preventDefault();
     const { fname, lname, gender, email, pword } = this.state;
-    // console.log(`${fname}${lname}${gender}${email}${pword}`);
-    axios
-      .post('http://localhost:3050/api/users', {
+    console.log(`${fname}${lname}${gender}${email}${pword}`);
+
+    glfsBlogDB
+      .post('/api/users', {
         firstName: `${fname}`,
         lastName: `${lname}`,
         gender: `${gender}`,
@@ -31,7 +33,6 @@ class SignUp extends Component {
       .catch((err) => {
         console.log(err);
       });
-    
   };
 
   handleCheckboxChange = (e) => {

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 
@@ -15,12 +16,13 @@ import BlogEdit from './components/blogs/BlogEdit';
 import BlogDelete from './components/blogs/BlogDelete';
 import Login from './components/signup/Login';
 import SignUp from './components/signup/SignUp';
+import Admin from './components/admin/Admin';
 
 import './components/global.css';
 
 // switch when deploying to deactivate redux devtools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, composeEnhancers(applyMiddleware()));
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
 // const store = createStore(reducers)
 
@@ -39,6 +41,7 @@ ReactDOM.render(
               <Route path="/blogs/delete/:id" component={BlogDelete} />
               <Route path="/signup/login" component={Login} />
               <Route path="/signup/signup" component={SignUp} />
+              <Route path="/admin/admin" component={Admin} />
             </div>
           </BrowserRouter>
         </div>
