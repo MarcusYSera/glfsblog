@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const BlogShow = ({ blog }) => {
   if (!blog) {
-    return <div>no song selected, please select song</div>;
+    return <div>no blog selected, please select blog</div>;
   }
   return (
     <div>

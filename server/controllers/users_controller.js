@@ -1,8 +1,10 @@
 const User = require('../models/user');
 
 module.exports ={
-  view(req, res){
-    res.send({hi: 'there'});
+  view(req, res, next){
+    User.find()
+      .then(user => res.send(user))
+      .catch(next)
   },
 
   create(req, res, next){
