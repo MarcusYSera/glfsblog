@@ -1,18 +1,43 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 class SignUp extends Component {
-  state = { fname: '', lname: '', male: false, female: false, email: '', pword: '' };
+  state = {
+    fname: '',
+    lname: '',
+    male: false,
+    female: false,
+    gender: '',
+    email: '',
+    pword: '',
+  };
 
   onFormSubmit = (event) => {
     event.preventDefault();
-    const { fname, lname, male, female, email, pword } = this.state;
-    console.log(`${fname}${lname}${male}${female}${email}${pword}`);
+    const { fname, lname, gender, email, pword } = this.state;
+    // console.log(`${fname}${lname}${gender}${email}${pword}`);
+    axios
+      .post('http://localhost:3050/api/users', {
+        firstName: `${fname}`,
+        lastName: `${lname}`,
+        gender: `${gender}`,
+        email: `${email}`,
+        password: `${pword}`,
+      })
+      .then((res) => {
+        console.log(res.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    
   };
 
   handleCheckboxChange = (e) => {
     const { target } = e;
     let value = false;
+
     if (target.name === 'male') {
       value = target.name === 'male' ? target.checked : target.value;
     } else if (target.name === 'female') {
@@ -21,6 +46,7 @@ class SignUp extends Component {
     const { name } = target;
     this.setState({
       [name]: value,
+      gender: name,
     });
   };
 

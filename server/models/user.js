@@ -22,10 +22,6 @@ const UserSchema = new Schema({
     type: String,
     required: false
   },
-  googleSignIn: {
-    type: Boolean,
-    default: false
-  }
 });
 
 const User = mongoose.model('user', UserSchema);
