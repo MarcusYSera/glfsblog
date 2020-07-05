@@ -2,12 +2,7 @@
 
 import glfsBlogDB from '../apis/glfsBlogDB';
 
-import {
-  BLOG_SELECTED,
-  SIGN_IN, SIGN_OUT,
-  // CREATE_USER,
-  VIEW_USER
-} from './types';
+import { BLOG_SELECTED, SIGN_IN, SIGN_OUT, VIEW_USER, CREATE_USER } from './types';
 
 export const selectBlog = (blog) => {
   return {
@@ -16,6 +11,7 @@ export const selectBlog = (blog) => {
   };
 };
 
+// Google Auth Flow
 export const signIn = (userId) => {
   return {
     type: SIGN_IN,
@@ -29,24 +25,19 @@ export const signOut = () => {
   };
 };
 
+// USERS
+
+// display all Users, grab all user data
 export const viewUser = () => async (dispatch) => {
-    const response = await glfsBlogDB.get('/api');
+  const response = await glfsBlogDB.get('/api');
 
-    dispatch({ type: VIEW_USER, payload: response.data });
+  dispatch({ type: VIEW_USER, payload: response.data });
+};
+
+// create new user
+export const createUserAction = (newUser) => {
+  return {
+    type: CREATE_USER,
+    payload: newUser,
   };
-
-
-// export const createUser = async (fname, lname, gender, email, pword) => {
-//   const response = await glfsBlogDB.post('/api/users');
-
-//   dispatch({
-//     type: CREATE_USER,
-//     payload: {
-//       firstName: fname,
-//       lastName: lname,
-//       gender: gender,
-//       email: email,
-//       password: pword,
-//     },
-//   });
-// };
+};

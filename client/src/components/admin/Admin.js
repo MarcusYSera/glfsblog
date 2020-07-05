@@ -8,18 +8,20 @@ class Admin extends Component {
   }
 
   renderUsers() {
-    return this.props.users.map(user=>{
-      return(
+    return this.props.users.map((user) => {
+      return (
         <div>
-          <p key={user.id}>Name: {user.firstName} {user.lastName} <br /> email: {user.email}</p>
+          <p key={user.id}>
+            Name: {user.firstName} {user.lastName} <br /> email: {user.email}
+          </p>
           <p></p>
         </div>
-      )
-    })
+      );
+    });
   }
 
   render() {
-    return <div>{this.renderUsers()}</div>
+    return <div>{this.renderUsers()}</div>;
   }
 }
 
