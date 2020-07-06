@@ -19,7 +19,7 @@ import Login from './components/signup/Login';
 import SignUp from './components/signup/SignUp';
 import Admin from './components/admin/Admin';
 
-// import './components/global.css';
+import './components/global.css';
 
 // switch when deploying to deactivate redux devtools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

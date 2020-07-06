@@ -2,7 +2,6 @@ import React from 'react';
 
 const BlogCreate = () => {
   return (
-    <div className="ui middle aligned center aligned grid">
       <div className="column">
         <h1 className="ui header">Post New Blog</h1>
         <form className="ui large form">
@@ -26,7 +25,6 @@ const BlogCreate = () => {
           </div>
         </form>
       </div>
-    </div>
   );
 };
 

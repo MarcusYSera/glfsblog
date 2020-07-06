@@ -17,10 +17,9 @@ class Login extends Component {
   render() {
     const { email, pass } = this.state;
     return (
-      <div className="ui middle aligned center aligned grid">
-        <div className="column">
+        <div className="signupform">
           <h1 className="ui header">Sign In</h1>
-          <form className="ui large form" onSubmit={this.onFormSubmit}>
+          <form className="ui form" onSubmit={this.onFormSubmit}>
             <div className="ui stacked segment">
               <div className="field">
                 <input
@@ -48,7 +47,6 @@ class Login extends Component {
             Need an Account? <Link to="/signup/SignUp">Sign Up</Link>
           </div>
         </div>
-      </div>
     );
   }
 }
