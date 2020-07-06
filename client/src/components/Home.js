@@ -1,9 +1,12 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const Home = () => {
   return (
     <div>
-      <h1>home</h1>
+      <Link to="/blogs/list">View All Blogs</Link>
+      <br />
+      <Link to="/blogs/new">Post a New Blog</Link>
     </div>
   );
 };

@@ -3,7 +3,7 @@
 import { combineReducers } from 'redux';
 // import { reducer as formReducer } from 'redux-form';
 
-import { showUsersReducer } from './userReducer';
+import { viewUsersReducer } from './userReducer';
 import authReducer from './authReducer';
 
 import { BLOG_SELECTED } from '../actions/types';
@@ -26,7 +26,7 @@ const selectedBlogReducer = (selectedBlog = null, action) => {
 
 export default combineReducers({
   auth: authReducer,
-  users: showUsersReducer,
+  users: viewUsersReducer,
   blogs: blogsReducer,
   selectedBlog: selectedBlogReducer,
   // form: formReducer,

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import GoogleAuth from './GoogleAuth';
+
 import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class SignUp extends Component {
@@ -131,8 +133,9 @@ class SignUp extends Component {
               <input type="submit" value="Submit" />
             </div>
           </form>
+          <GoogleAuth />
           <div className="ui message">
-            Already have an Account? <Link to="/signup/Login">Login</Link>
+            Already have an Account? <Link to="/signup/signin">Sign In</Link>
           </div>
         </div>
       </div>

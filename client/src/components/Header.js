@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import GoogleAuth from './signup/GoogleAuth';
-
 const Header = () => {
   return (
     <div className="ui segment">
@@ -13,7 +11,8 @@ const Header = () => {
         Home
         {/* <i className="home icon" /> */}
       </Link>
-      <GoogleAuth />
+      <Link to="/signup/signin" className="ui right floated header">Sign In</Link>
+      <Link to="/admin/Admin" className="ui right floated header">Admin</Link>
     </div>
   );
 };

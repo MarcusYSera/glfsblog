@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { viewUser } from '../../actions';
+import { viewUserAction } from '../../actions';
 
 class Admin extends Component {
   componentDidMount() {
-    this.props.viewUser();
+    this.props.viewUserAction();
   }
 
   renderUsers() {
     return this.props.users.map((user) => {
       return (
-        <div>
-          <p key={user.id}>
-            Name: {user.firstName} {user.lastName} <br /> email: {user.email}
+        <div key={user._id}>
+          <p>
+            Name: {user.firstName} {user.lastName}
           </p>
-          <p></p>
+          <p>email: {user.email}</p>
         </div>
       );
     });
@@ -29,4 +29,4 @@ const mapStateToProps = (state) => {
   return { users: state.users };
 };
 
-export default connect(mapStateToProps, { viewUser })(Admin);
+export default connect(mapStateToProps, { viewUserAction })(Admin);

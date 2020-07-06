@@ -9,6 +9,7 @@ import reducers from './reducers';
 
 import Header from './components/Header';
 
+import Home from './components/Home';
 import BlogShow from './components/blogs/BlogShow';
 import BlogList from './components/blogs/BlogList';
 import BlogCreate from './components/blogs/BlogCreate';
@@ -34,12 +35,13 @@ ReactDOM.render(
           <BrowserRouter>
             <div>
               <Header />
-              <Route path="/" exact component={BlogList} />
+              <Route path="/" exact component={Home} />
+              <Route path="/blogs/list" component={BlogList} />
               <Route path="/blogs/new" component={BlogCreate} />
               <Route path="/blogs/edit/:id" component={BlogEdit} />
               <Route path="/blogs/view/:id" component={BlogShow} />
               <Route path="/blogs/delete/:id" component={BlogDelete} />
-              <Route path="/signup/login" component={Login} />
+              <Route path="/signup/signin" component={Login} />
               <Route path="/signup/signup" component={SignUp} />
               <Route path="/admin/admin" component={Admin} />
             </div>
