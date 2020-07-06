@@ -19,7 +19,7 @@ import Login from './components/signup/Login';
 import SignUp from './components/signup/SignUp';
 import Admin from './components/admin/Admin';
 
-import './components/global.css';
+// import './components/global.css';
 
 // switch when deploying to deactivate redux devtools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -29,7 +29,7 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <Provider store={store}>
-    <div className="ui container grid">
+    <div className="ui middle aligned center aligned grid">
       <div className="ui row">
         <div className="column wide">
           <BrowserRouter>

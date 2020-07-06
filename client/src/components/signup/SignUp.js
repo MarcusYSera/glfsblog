@@ -5,6 +5,8 @@ import GoogleAuth from './GoogleAuth';
 
 import glfsBlogDB from '../../apis/glfsBlogDB';
 
+import '../global.css';
+
 class SignUp extends Component {
   state = {
     fname: '',
@@ -59,30 +61,30 @@ class SignUp extends Component {
     const month = `${today.getFullYear().toString()}-${`0${today.getMonth() + 1}`
       .slice(-2)
       .toString()}`;
-    // console.log(new Intl.DateTimeFormat('en-US', { month: 'long' }).format(today));
     return (
-      <div className="ui middle aligned center aligned grid">
         <div className="column">
           <h1 className="ui header">Sign Up</h1>
-          <form className="ui large form" onSubmit={this.onFormSubmit}>
+          <form className="ui small form" onSubmit={this.onFormSubmit}>
             <div className="ui stacked segment">
-              <div className="field">
-                <input
-                  type="text"
-                  value={fname}
-                  placeholder="First Name"
-                  onChange={(e) => this.setState({ fname: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="field">
-                <input
-                  type="text"
-                  value={lname}
-                  placeholder="Last Name"
-                  onChange={(event) => this.setState({ lname: event.target.value })}
-                  required
-                />
+              <div className="two fields">
+                <div className="field">
+                  <input
+                    type="text"
+                    value={fname}
+                    placeholder="First Name"
+                    onChange={(e) => this.setState({ fname: e.target.value })}
+                  />
+                </div>
+                <div className="field">
+                  <input
+                    type="text"
+                    value={lname}
+                    placeholder="Last Name"
+                    onChange={(event) =>
+                      this.setState({ lname: event.target.value })
+                    }
+                  />
+                </div>
               </div>
               <div className="field">
                 <label htmlFor="male">
@@ -118,7 +120,6 @@ class SignUp extends Component {
                   value={email}
                   placeholder="Email"
                   onChange={(event) => this.setState({ email: event.target.value })}
-                  required
                 />
               </div>
               <div className="field">
@@ -127,10 +128,9 @@ class SignUp extends Component {
                   value={pword}
                   placeholder="Password"
                   onChange={(e) => this.setState({ pword: e.target.value })}
-                  required
                 />
               </div>
-              <input type="submit" value="Submit" />
+              <input className="ui submit button" type="submit" value="Submit" />
             </div>
           </form>
           <GoogleAuth />
@@ -138,7 +138,6 @@ class SignUp extends Component {
             Already have an Account? <Link to="/signup/signin">Sign In</Link>
           </div>
         </div>
-      </div>
     );
   }
 }
