@@ -12,9 +12,9 @@ const app = express();
 mongoose.Promise = global.Promise;
 if (process.env.NODE_ENV !== 'test'){
   // deployment database
-  mongoose.connect(`mongodb+srv://${mongoUser}:${mongoPassword}@glfsblog.o5glh.mongodb.net/${mongoDB}?retryWrites=true&w=majority`);
+  mongoose.connect(`mongodb+srv://${mongoUser}:${mongoPassword}@glfsblog.o5glh.mongodb.net/${mongoDB}?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
   // local database
-  // mongoose.connect('mongodb://localhost/glfsblog')
+  // mongoose.connect('mongodb://localhost/glfsblog', { useNewUrlParser: true, useUnifiedTopology: true })
 }
 
 // app.use((req, res, next) => {

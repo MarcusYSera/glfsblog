@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 before(done=>{
-  mongoose.connect('mongodb://localhost/glfsblog_test');
+  mongoose.connect('mongodb://localhost/glfsblog_test', { useNewUrlParser: true, useUnifiedTopology: true });
   mongoose.connection
     .once('open', ()=>done())
     .on('error', err=>{
