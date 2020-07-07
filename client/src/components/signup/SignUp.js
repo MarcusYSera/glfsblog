@@ -40,16 +40,18 @@ class SignUp extends Component {
   handleCheckboxChange = (e) => {
     const { target } = e;
     let value = false;
-
-    if (target.name === 'male') {
-      value = target.name === 'male' ? target.checked : target.value;
-    } else if (target.name === 'female') {
-      value = target.name === 'female' ? target.checked : target.value;
+    let opposite = '';
+    if (target.value === 'male') {
+      value = target.value === 'male' ? target.checked : value;
+      opposite = 'female';
+    } else if (target.value === 'female') {
+      value = target.value === 'female' ? target.checked : value;
+      opposite = 'male';
     }
-    const { name } = target;
     this.setState({
-      [name]: value,
-      gender: name,
+      [target.value]: value,
+      gender: target.value,
+      [opposite]: false,
     });
   };
 
@@ -87,7 +89,8 @@ class SignUp extends Component {
                 <input
                   type="radio"
                   value="male"
-                  checked={this.handleCheckboxChange}
+                  checked={male}
+                  onChange={this.handleCheckboxChange}
                 />
                 Male
               </label>
@@ -95,7 +98,8 @@ class SignUp extends Component {
                 <input
                   type="radio"
                   value="female"
-                  checked={this.handleCheckboxChange}
+                  checked={female}
+                  onChange={this.handleCheckboxChange}
                 />
                 Female
               </label>
