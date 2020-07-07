@@ -29,26 +29,26 @@ const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <Provider store={store}>
-    <div className="ui middle aligned center aligned grid">
-      <div className="ui row">
-        <div className="column wide">
-          <BrowserRouter>
-            <div>
-              <Header />
-              <Route path="/" exact component={Home} />
-              <Route path="/blogs/list" component={BlogList} />
-              <Route path="/blogs/new" component={BlogCreate} />
-              <Route path="/blogs/edit/:id" component={BlogEdit} />
-              <Route path="/blogs/view/:id" component={BlogShow} />
-              <Route path="/blogs/delete/:id" component={BlogDelete} />
-              <Route path="/signup/signin" component={Login} />
-              <Route path="/signup/signup" component={SignUp} />
-              <Route path="/admin/admin" component={Admin} />
-            </div>
-          </BrowserRouter>
+    <BrowserRouter>
+      {/* <div> */}
+      <Header />
+      <div className="ui text container">
+        <div className="ui row">
+          <div className="column wide">
+            <Route path="/" exact component={Home} />
+            <Route path="/blogs/list" component={BlogList} />
+            <Route path="/blogs/new" component={BlogCreate} />
+            <Route path="/blogs/edit/:id" component={BlogEdit} />
+            <Route path="/blogs/view/:id" component={BlogShow} />
+            <Route path="/blogs/delete/:id" component={BlogDelete} />
+            <Route path="/signup/signin" component={Login} />
+            <Route path="/signup/signup" component={SignUp} />
+            <Route path="/admin/admin" component={Admin} />
+          </div>
         </div>
       </div>
-    </div>
+      {/* </div> */}
+    </BrowserRouter>
   </Provider>,
   document.querySelector('#root')
 );
