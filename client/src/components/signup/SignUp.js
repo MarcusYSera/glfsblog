@@ -11,23 +11,39 @@ class SignUp extends Component {
     lname: '',
     male: false,
     female: false,
-    gender: '',
+    // gender: '',
+    // bday: '',
     email: '',
     pword: '',
+    createdat: '',
+    month: 0,
+  };
+
+  componentDidMount = (e) => {
+    const today = new Date();
+    const month = `${today.getFullYear().toString()}-${`0${today.getMonth() + 1}`
+      .slice(-2)
+      .toString()}`;
+    this.setState({
+      createdat: today,
+      month: month,
+    });
   };
 
   onFormSubmit = (event) => {
     event.preventDefault();
-    const { fname, lname, gender, email, pword } = this.state;
-    console.log(`${fname}${lname}${gender}${email}${pword}`);
+    const { fname, lname, gender, bday, email, pword, createdat } = this.state;
+    console.log(`${fname}${lname}${gender}${bday}${email}${pword}${createdat}`);
 
     glfsBlogDB
       .post('/api/users', {
         firstName: `${fname}`,
         lastName: `${lname}`,
-        gender: `${gender}`,
+        // birthday: `${bday}`,
+        // gender: `${gender}`,
         email: `${email}`,
         password: `${pword}`,
+        createdAt: `${createdat}`,
       })
       .then((res) => {
         console.log(res.status);
@@ -56,11 +72,8 @@ class SignUp extends Component {
   };
 
   render() {
-    const { fname, lname, male, female, email, pword } = this.state;
-    const today = new Date();
-    const month = `${today.getFullYear().toString()}-${`0${today.getMonth() + 1}`
-      .slice(-2)
-      .toString()}`;
+    const { fname, lname, male, female, bday, email, pword, month } = this.state;
+
     return (
       <div className="signupform">
         <h1 className="ui header">Sign Up</h1>
@@ -84,7 +97,7 @@ class SignUp extends Component {
                 />
               </div>
             </div>
-            <div className="field">
+            {/* <div className="field">
               <label>
                 <input
                   type="radio"
@@ -103,35 +116,19 @@ class SignUp extends Component {
                 />
                 Female
               </label>
-            </div>
+            </div> */}
             {/* <div className="field">
-              <label htmlFor="male">
-                Male
+              <label htmlFor="bday">
+                Birthday:
                 <input
-                  type="checkbox"
-                  name="male"
-                  value={male}
-                  checked={male}
-                  onChange={this.handleCheckboxChange}
-                />
-              </label>
-              <label htmlFor="female">
-                Female
-                <input
-                  type="checkbox"
-                  name="female"
-                  value={female}
-                  checked={female}
-                  onChange={this.handleCheckboxChange}
+                  type="month"
+                  name="bday"
+                  value={bday}
+                  max={month}
+                  onChange={(e) => this.setState({ bday: e.target.value })}
                 />
               </label>
             </div> */}
-            <div className="field">
-              <label htmlFor="bday">
-                Birthday:
-                <input type="month" name="bday" max={month} required />
-              </label>
-            </div>
             <div className="field">
               <input
                 type="email"
@@ -148,7 +145,9 @@ class SignUp extends Component {
                 onChange={(e) => this.setState({ pword: e.target.value })}
               />
             </div>
-            <input className="ui submit button" type="submit" value="Submit" />
+            <button className="ui submit button" type="submit">
+              Submit
+            </button>
           </div>
         </form>
         <GoogleAuth />

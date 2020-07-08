@@ -14,6 +14,10 @@ const UserSchema = new Schema({
     type: String,
     required: false
   },
+  birthday: {
+    type: String,
+    required: false
+  },
   email: {
     type: String,
     required: true
@@ -22,6 +26,10 @@ const UserSchema = new Schema({
     type: String,
     required: false
   },
+  createdAt: {
+    type: String,
+    required: false
+  }
 });
 
 const User = mongoose.model('user', UserSchema);

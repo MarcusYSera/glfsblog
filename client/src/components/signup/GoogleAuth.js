@@ -11,7 +11,7 @@ class GoogleAuth extends Component {
         .init({
           clientId:
             '497745475816-s1se1ef8qio68uoat80f87bdmmbmtg33.apps.googleusercontent.com',
-          scope: 'email',
+          scope: ('email','profile')
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
@@ -25,6 +25,10 @@ class GoogleAuth extends Component {
     const { signIn: signInProp, signOut: signOutProp } = this.props;
     if (isSignedIn) {
       signInProp(this.auth.currentUser.get().getId());
+      // console.log(this.auth.currentUser.get().getBasicProfile());
+      console.log(this.auth.currentUser.get().getBasicProfile().getEmail());
+      console.log(this.auth.currentUser.get().getBasicProfile().getName());
+      console.log(this.auth.currentUser.get().getId());
     } else {
       signOutProp();
     }
