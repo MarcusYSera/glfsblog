@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 // import { DELETE_USER } from '../actions/types';
 
+import Dropdown from './Dropdown';
+
 const Header = () => {
   return (
     <div className="ui borderless main menu">
@@ -11,11 +13,8 @@ const Header = () => {
             <i className="circle icon red" />
           </Link>
         </div>
-        {/* <select className="ui dropdown">
-          <option className="item">hello</option>
-          <option className="item">good bye</option>
-        </select> */}
-        <div className="ui icon right pointing dropdown link item">
+        <Dropdown />
+        {/* <div className="ui icon right pointing dropdown link item">
           <i className="bars icon"></i>
           <div className="menu">
             <div className="item">
@@ -29,7 +28,7 @@ const Header = () => {
               <Link to="/admin/Admin">Admin</Link>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

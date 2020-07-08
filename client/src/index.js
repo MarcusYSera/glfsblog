@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 
-import Header from './components/Header';
+import Header from './components/header/Header';
 
 import Home from './components/Home';
 import BlogShow from './components/blogs/BlogShow';
