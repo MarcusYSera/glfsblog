@@ -18,6 +18,7 @@ import BlogDelete from './components/blogs/BlogDelete';
 import Login from './components/signup/Login';
 import SignUp from './components/signup/SignUp';
 import Admin from './components/admin/Admin';
+import FinalForm from './components/signup/FinalForm';
 
 import './components/global.css';
 
@@ -43,7 +44,8 @@ ReactDOM.render(
             <Route path="/blogs/delete/:id" component={BlogDelete} />
             <Route path="/signup/signin" component={Login} />
             <Route path="/signup/signup" component={SignUp} />
-            <Route path="/admin/admin" component={Admin} />
+            <Route path="/signup/signup" component={FinalForm} />
+            <Route path="/signup/finalform" component={Admin} />
           </div>
         </div>
       </div>
