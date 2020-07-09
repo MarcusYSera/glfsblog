@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { createUserAction } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
 
@@ -9,38 +12,27 @@ class SignUp extends Component {
   state = {
     fname: '',
     lname: '',
-    male: false,
-    female: false,
-    // gender: '',
-    // bday: '',
     email: '',
     pword: '',
     createdat: '',
-    month: 0,
   };
 
   componentDidMount = (e) => {
     const today = new Date();
-    const month = `${today.getFullYear().toString()}-${`0${today.getMonth() + 1}`
-      .slice(-2)
-      .toString()}`;
     this.setState({
       createdat: today,
-      month: month,
     });
   };
 
   onFormSubmit = (event) => {
     event.preventDefault();
-    const { fname, lname, gender, bday, email, pword, createdat } = this.state;
-    console.log(`${fname}${lname}${gender}${bday}${email}${pword}${createdat}`);
+    const { fname, lname, email, pword, createdat } = this.state;
+    console.log(`${fname}${lname}${email}${pword}${createdat}`);
 
     glfsBlogDB
       .post('/api/users', {
         firstName: `${fname}`,
         lastName: `${lname}`,
-        // birthday: `${bday}`,
-        // gender: `${gender}`,
         email: `${email}`,
         password: `${pword}`,
         createdAt: `${createdat}`,
@@ -51,24 +43,6 @@ class SignUp extends Component {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  handleCheckboxChange = (e) => {
-    const { target } = e;
-    let value = false;
-    let opposite = '';
-    if (target.value === 'male') {
-      value = target.value === 'male' ? target.checked : value;
-      opposite = 'female';
-    } else if (target.value === 'female') {
-      value = target.value === 'female' ? target.checked : value;
-      opposite = 'male';
-    }
-    this.setState({
-      [target.value]: value,
-      gender: target.value,
-      [opposite]: false,
-    });
   };
 
   render() {
@@ -102,38 +76,6 @@ class SignUp extends Component {
                       />
                     </div>
                   </div>
-                  {/* <div className="field">
-              <label>
-                <input
-                  type="radio"
-                  value="male"
-                  checked={male}
-                  onChange={this.handleCheckboxChange}
-                />
-                Male
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="female"
-                  checked={female}
-                  onChange={this.handleCheckboxChange}
-                />
-                Female
-              </label>
-            </div> */}
-                  {/* <div className="field">
-              <label htmlFor="bday">
-                Birthday:
-                <input
-                  type="month"
-                  name="bday"
-                  value={bday}
-                  max={month}
-                  onChange={(e) => this.setState({ bday: e.target.value })}
-                />
-              </label>
-            </div> */}
                   <div className="field">
                     <input
                       type="email"
@@ -172,4 +114,10 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = (state) => {
+  console.log(state);
+  
+  return state;
+};
+
+export default connect(mapStateToProps, { createUserAction })(SignUp);
