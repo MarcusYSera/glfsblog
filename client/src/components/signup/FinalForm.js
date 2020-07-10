@@ -3,30 +3,61 @@ import { Form, Field, FormSpy } from 'react-final-form';
 
 class FinalForm extends Component {
   onSubmit = (e) => {
-    e.preventDefault();
     console.log(e);
   };
 
-  handleSubmit = (e) => {
-    console.log(e);
-  };
-  
+  // handleSubmit = (e) => {
+  //   console.log(e);
+  // };
+
+  required = (value) => (value ? undefined : 'Required');
+
   render() {
     return (
       <div>
         <h1>Final Form</h1>
-        <Form>
+        <Form
           onSubmit={this.onSubmit}
-          <form onSubmit={this.handleSubmit}>
-            <div>
-              <label>First Name</label>
-              <Field name="firstName" type="text" placeholder="First Name" />
-            </div>
-            <div>
-              <button type="submit">Submit</button>
-            </div>
-          </form>
-        </Form>
+          render={({ handleSubmit }) => (
+            <form onSubmit={handleSubmit}>
+              <Field name="firstName" validate={this.required}>
+                {({ input, meta }) => (
+                  <div>
+                    <input {...input} placeholder="First Name" />
+                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+              <Field name="lastName" validate={this.required}>
+                {({ input, meta }) => (
+                  <div>
+                    <input {...input} placeholder="Last Name" />
+                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+              <Field name="email" validate={this.required}>
+                {({ input, meta }) => (
+                  <div>
+                    <input {...input} placeholder="Email" />
+                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+              <Field name="password" validate={this.required}>
+                {({ input, meta }) => (
+                  <div>
+                    <input {...input} placeholder="Password" />
+                    {meta.touched && meta.error && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
+              <div>
+                <button type="submit">Submit</button>
+              </div>
+            </form>
+          )}
+        />
       </div>
     );
   }
