@@ -7,13 +7,17 @@ class FinalForm extends Component {
     console.log(e);
   };
 
+  handleSubmit = (e) => {
+    console.log(e);
+  };
+  
   render() {
     return (
       <div>
         <h1>Final Form</h1>
         <Form>
           onSubmit={this.onSubmit}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={this.handleSubmit}>
             <div>
               <label>First Name</label>
               <Field name="firstName" type="text" placeholder="First Name" />
