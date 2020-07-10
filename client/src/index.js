@@ -44,8 +44,8 @@ ReactDOM.render(
             <Route path="/blogs/delete/:id" component={BlogDelete} />
             <Route path="/signup/signin" component={Login} />
             <Route path="/signup/signup" component={SignUp} />
-            <Route path="/signup/signup" component={FinalForm} />
-            <Route path="/signup/finalform" component={Admin} />
+            <Route path="/signup/finalform" component={FinalForm} />
+            <Route path="/admin/admin" component={Admin} />
           </div>
         </div>
       </div>
