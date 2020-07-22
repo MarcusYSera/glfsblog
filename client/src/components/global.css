@@ -1,6 +1,7 @@
-/* * {
-  background: darkslategrey;
-} */
+body {
+  background: linear-gradient(lightpink, 20%, white);
+}
+
 .signupform {
   max-width: 450px;
   margin: auto;

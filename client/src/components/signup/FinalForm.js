@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Field, FormSpy } from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 
 class FinalForm extends Component {
   // onSubmit = (e) => {
