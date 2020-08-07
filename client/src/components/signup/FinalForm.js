@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 
 class FinalForm extends Component {
-  // onSubmit = (e) => {
-  //   console.log(e.firstName);
-  // };
+
+  onSubmit = (e) => {
+    console.log(`onSubmit callback here: ${e.firstName}`);
+  };
 
   required = (value) => (value ? undefined : 'Required');
 
@@ -13,16 +14,14 @@ class FinalForm extends Component {
       <div>
         <h1>Final Form</h1>
         <Form
-          onSubmit={(values) => {
-            console.log({ values });
-          }}
+          onSubmit={this.onSubmit}
           initialValues={{
             firstName: '',
             lastName: '',
             email: '',
             password: '',
           }}
-          render={({ handleSubmit }) => (
+          render={({ handleSubmit, form, submitting, pristine, values }) => (
             <form onSubmit={handleSubmit}>
               <Field name="firstName" validate={this.required}>
                 {({ input, meta }) => (
