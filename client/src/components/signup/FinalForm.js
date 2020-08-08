@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Field } from 'react-final-form';
+import { Form, Field, FormSpy } from 'react-final-form';
 import { withRouter, Link } from 'react-router-dom';
 
 import GoogleAuth from './GoogleAuth';
@@ -47,6 +47,7 @@ class FinalForm extends Component {
     validators.reduce((error, validator) => error || validator(value), undefined);
 
   render() {
+    const subscription = {};
     return (
       <div>
         <h1 className="ui center aligned header">Sign Up</h1>
@@ -55,6 +56,7 @@ class FinalForm extends Component {
             <div className="column">
               <Form
                 onSubmit={this.onSubmit}
+                subscription={subscription}
                 validate={(values) => {
                   const errors = {};
                   if (values.password !== values.confirmPassword) {
@@ -69,7 +71,7 @@ class FinalForm extends Component {
                   password: '',
                   confirmPassword: '',
                 }}
-                render={({ handleSubmit, form }) => (
+                render={({ handleSubmit, form, values }) => (
                   <form
                     className="ui form attached fluid segment"
                     onSubmit={handleSubmit}
