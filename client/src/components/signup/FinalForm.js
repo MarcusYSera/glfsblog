@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
+import { withRouter } from 'react-router-dom';
 
 class FinalForm extends Component {
   onSubmit = (e) => {
-    console.log(`onSubmit callback here: ${e.firstName}`);
+    console.log(`onSubmit callback here: ${JSON.stringify(e)}`);
+    this.props.history.push('/');
   };
 
   required = (value) => (value ? undefined : 'Required');
@@ -22,8 +24,9 @@ class FinalForm extends Component {
           }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <form onSubmit={handleSubmit}>
+              {/* will require field level validation to check individual values */}
               <div>
-                <label>First Name</label>
+                {/* <label>First Name</label> */}
                 <Field
                   name="firstName"
                   component="input"
@@ -40,7 +43,7 @@ class FinalForm extends Component {
                 </Field>
               </div>
               <div>
-                <label>Last Name</label>
+                {/* <label>Last Name</label> */}
                 <Field
                   name="lastName"
                   component="input"
@@ -57,8 +60,14 @@ class FinalForm extends Component {
                 </Field>
               </div>
               <div>
-                <label>Email</label>
-                <Field name="email" validate={this.required}>
+                {/* <label>Email</label> */}
+                <Field
+                  name="email"
+                  component="input"
+                  type="text"
+                  placeholder="email"
+                  validate={this.required}
+                >
                   {({ input, meta }) => (
                     <div>
                       <input {...input} placeholder="Email" />
@@ -67,12 +76,37 @@ class FinalForm extends Component {
                   )}
                 </Field>
               </div>
+
+              {/* Require record level validation for password and confirm password */}
+
               <div>
-                <label>Password</label>
-                <Field name="password" validate={this.required}>
+                {/* <label>Password</label> */}
+                <Field
+                  name="password"
+                  component="input"
+                  type="password"
+                  placeholder="password"
+                  validate={this.required}
+                >
                   {({ input, meta }) => (
                     <div>
                       <input {...input} placeholder="Password" />
+                      {meta.touched && meta.error && <span>{meta.error}</span>}
+                    </div>
+                  )}
+                </Field>
+              </div>
+              <div>
+                <Field
+                  name="confirmPassword"
+                  component="input"
+                  type="password"
+                  placeholder="confirmPassword"
+                  validate={this.required}
+                >
+                  {({ input, meta }) => (
+                    <div>
+                      <input {...input} placeholder="Confirm Password" />
                       {meta.touched && meta.error && <span>{meta.error}</span>}
                     </div>
                   )}
@@ -89,4 +123,4 @@ class FinalForm extends Component {
   }
 }
 
-export default FinalForm;
+export default withRouter(FinalForm);
