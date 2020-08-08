@@ -37,22 +37,29 @@ class GoogleAuth extends Component {
     const { signIn: signInProp, signOut: signOutProp, createNewUser } = this.props;
     if (isSignedIn) {
       signInProp(this.auth.currentUser.get().getId());
-      const userEmail = this.auth.currentUser.get().getBasicProfile().getEmail();
-      // console.log(this.auth.currentUser.get().getBasicProfile().getEmail());
-      const userSet = this.auth.currentUser.get().getBasicProfile().getName();
-      console.log(userSet);
-      const idSet = this.auth.currentUser.get().getId();
-      // console.log(idSet);
+
+      const getInfo = this.auth.currentUser.get();
+      const basicProfile = getInfo.getBasicProfile();
+
+      const idSet = getInfo.getId();
+      const userEmail = basicProfile.getEmail();
+      const userFirstName = basicProfile.getGivenName();
+      const userLastName = basicProfile.getFamilyName();
+
       this.setState({
         signedIn: idSet,
-        userName: userSet,
+        userName: userFirstName,
       });
+
       if (createNewUser) {
+        const today = new Date();
         glfsBlogDB
           .post('/api/users', {
-            firstName: `${idSet}`,
-            lastName: `${userSet}`,
+            gmailID: `${idSet}`,
+            firstName: `${userFirstName}`,
+            lastName: `${userLastName}`,
             email: `${userEmail}`,
+            createdAt: `${today}`,
           })
           .then((res) => {
             console.log(res.status);
@@ -63,6 +70,7 @@ class GoogleAuth extends Component {
             console.log(err);
           });
       }
+
     } else {
       signOutProp();
     }
