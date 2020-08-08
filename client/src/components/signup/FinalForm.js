@@ -1,32 +1,36 @@
 import React, { Component } from 'react';
-import { Form, Field, FormSpy } from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { createUserAction } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
 
 import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class FinalForm extends Component {
-  state = { firstName: '', lastName: '', email: '', password: '', createdAt: '' };
+  // state = { createdAt: '' };
 
-  componentDidMount = (e) => {
-    const today = new Date();
-    this.setState({
-      createdAt: today,
-    });
-  };
+  // componentDidMount = (e) => {
+  //   const today = new Date();
+  //   this.setState({
+  //     createdAt: today,
+  //   });
+  // };
 
   onSubmit = (e) => {
-    const { firstName, lastName, email, password, createdAt } = this.state;
+    // const { createdAt } = this.state;
+    const today = new Date();
     console.log(`onSubmit callback here: ${JSON.stringify(e)}`);
 
     glfsBlogDB
       .post('/api/users', {
-        firstName: `${firstName}`,
-        lastName: `${lastName}`,
-        email: `${email}`,
-        password: `${password}`,
-        createdAt: `${createdAt}`,
+        firstName: `${e.firstName}`,
+        lastName: `${e.lastName}`,
+        email: `${e.email}`,
+        password: `${e.password}`,
+        createdAt: `${today}`,
       })
       .then((res) => {
         console.log(res.status);
@@ -195,7 +199,7 @@ class FinalForm extends Component {
               </div>
             </div>
             <div className="middle aligned column">
-              <GoogleAuth />
+              <GoogleAuth createNewUser={true} />
             </div>
           </div>
           <div className="ui vertical divider">OR</div>
@@ -205,4 +209,9 @@ class FinalForm extends Component {
   }
 }
 
-export default withRouter(FinalForm);
+const mapStateToProps = (state) => {
+  console.log(state);
+  return state;
+};
+
+export default connect(mapStateToProps, { createUserAction })(withRouter(FinalForm));

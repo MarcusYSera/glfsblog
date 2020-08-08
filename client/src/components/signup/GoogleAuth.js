@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { signIn, signOut } from '../../actions';
+import { signIn, signOut, createUserAction } from '../../actions';
+
+import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class GoogleAuth extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      createNewUser: props.createNewUser,
+      signedIn: '',
+      userName: '',
+    };
+  }
+
   componentDidMount() {
     window.gapi.load('client:auth2', () => {
       window.gapi.client
@@ -22,13 +34,35 @@ class GoogleAuth extends Component {
   }
 
   onAuthChange = (isSignedIn) => {
-    const { signIn: signInProp, signOut: signOutProp } = this.props;
+    const { signIn: signInProp, signOut: signOutProp, createNewUser } = this.props;
     if (isSignedIn) {
       signInProp(this.auth.currentUser.get().getId());
-      // console.log(this.auth.currentUser.get().getBasicProfile());
-      console.log(this.auth.currentUser.get().getBasicProfile().getEmail());
-      console.log(this.auth.currentUser.get().getBasicProfile().getName());
-      console.log(this.auth.currentUser.get().getId());
+      const userEmail = this.auth.currentUser.get().getBasicProfile().getEmail();
+      // console.log(this.auth.currentUser.get().getBasicProfile().getEmail());
+      const userSet = this.auth.currentUser.get().getBasicProfile().getName();
+      console.log(userSet);
+      const idSet = this.auth.currentUser.get().getId();
+      // console.log(idSet);
+      this.setState({
+        signedIn: idSet,
+        userName: userSet,
+      });
+      if (createNewUser) {
+        glfsBlogDB
+          .post('/api/users', {
+            firstName: `${idSet}`,
+            lastName: `${userSet}`,
+            email: `${userEmail}`,
+          })
+          .then((res) => {
+            console.log(res.status);
+            this.props.history.push('/');
+          })
+          .catch((err) => {
+            alert(err);
+            console.log(err);
+          });
+      }
     } else {
       signOutProp();
     }
@@ -92,4 +126,6 @@ const mapStateToProps = (state) => {
   return { isSignedIn: state.auth.isSignedIn };
 };
 
-export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth);
+export default connect(mapStateToProps, { signIn, signOut, createUserAction })(
+  withRouter(GoogleAuth)
+);

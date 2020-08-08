@@ -20,7 +20,7 @@ class Login extends Component {
       <div className="signupform">
         <h1 className="ui center aligned header">Login</h1>
         <div className="ui center aligned basic segment">
-          <GoogleAuth />
+          <GoogleAuth createNewUser={false} />
           <div className="ui horizontal divider">OR</div>
           <form
             className="ui form attached fluid segment"
