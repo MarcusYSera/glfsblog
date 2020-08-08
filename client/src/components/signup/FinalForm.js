@@ -9,6 +9,9 @@ class FinalForm extends Component {
   };
 
   required = (value) => (value ? undefined : 'Required');
+  validEmail = (value) => (isNaN(value) ? 'Must be a number' : undefined);
+  composeValidators = (...validators) => (value) =>
+    validators.reduce((error, validator) => error || validator(value), undefined);
 
   render() {
     return (
@@ -16,17 +19,25 @@ class FinalForm extends Component {
         <h1>Final Form</h1>
         <Form
           onSubmit={this.onSubmit}
+          validate={(values) => {
+            const errors = {};
+            if (values.password !== values.confirmPassword) {
+              errors.confirmPassword = 'Must Match';
+            }
+            return errors;
+          }}
           initialValues={{
             firstName: '',
             lastName: '',
             email: '',
             password: '',
+            confirmPassword: '',
           }}
-          render={({ handleSubmit, form, submitting, pristine, values }) => (
+          render={({ handleSubmit, form }) => (
             <form onSubmit={handleSubmit}>
               {/* will require field level validation to check individual values */}
               <div>
-                {/* <label>First Name</label> */}
+                <label>First Name</label>
                 <Field
                   name="firstName"
                   component="input"
@@ -43,7 +54,7 @@ class FinalForm extends Component {
                 </Field>
               </div>
               <div>
-                {/* <label>Last Name</label> */}
+                <label>Last Name</label>
                 <Field
                   name="lastName"
                   component="input"
@@ -60,13 +71,13 @@ class FinalForm extends Component {
                 </Field>
               </div>
               <div>
-                {/* <label>Email</label> */}
+                <label>Email</label>
                 <Field
                   name="email"
                   component="input"
                   type="text"
                   placeholder="email"
-                  validate={this.required}
+                  validate={this.composeValidators(this.required, this.validEmail)}
                 >
                   {({ input, meta }) => (
                     <div>
@@ -80,7 +91,7 @@ class FinalForm extends Component {
               {/* Require record level validation for password and confirm password */}
 
               <div>
-                {/* <label>Password</label> */}
+                <label>Password</label>
                 <Field
                   name="password"
                   component="input"
@@ -97,6 +108,7 @@ class FinalForm extends Component {
                 </Field>
               </div>
               <div>
+                <label>Confirm Password</label>
                 <Field
                   name="confirmPassword"
                   component="input"
