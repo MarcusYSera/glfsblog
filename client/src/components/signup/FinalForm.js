@@ -9,7 +9,10 @@ class FinalForm extends Component {
   };
 
   required = (value) => (value ? undefined : 'Required');
-  validEmail = (value) => (isNaN(value) ? 'Must be a number' : undefined);
+  validEmail = (value) =>
+    /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z0-9]{2,}\w+/g.test(value)
+      ? undefined
+      : 'Must be a valid email';
   composeValidators = (...validators) => (value) =>
     validators.reduce((error, validator) => error || validator(value), undefined);
 
