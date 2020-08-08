@@ -42,7 +42,7 @@ ReactDOM.render(
             <Route path="/blogs/edit/:id" component={BlogEdit} />
             <Route path="/blogs/view/:id" component={BlogShow} />
             <Route path="/blogs/delete/:id" component={BlogDelete} />
-            <Route path="/signup/signin" component={Login} />
+            <Route path="/signup/login" component={Login} />
             <Route path="/signup/signup" component={SignUp} />
             <Route path="/signup/finalform" component={FinalForm} />
             <Route path="/admin/admin" component={Admin} />

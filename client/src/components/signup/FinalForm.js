@@ -1,11 +1,41 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
+
+import GoogleAuth from './GoogleAuth';
+
+import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class FinalForm extends Component {
+  state = { firstName: '', lastName: '', email: '', password: '', createdAt: '' };
+
+  componentDidMount = (e) => {
+    const today = new Date();
+    this.setState({
+      createdAt: today,
+    });
+  };
+
   onSubmit = (e) => {
+    const { firstName, lastName, email, password, createdAt } = this.state;
     console.log(`onSubmit callback here: ${JSON.stringify(e)}`);
-    this.props.history.push('/');
+
+    glfsBlogDB
+      .post('/api/users', {
+        firstName: `${firstName}`,
+        lastName: `${lastName}`,
+        email: `${email}`,
+        password: `${password}`,
+        createdAt: `${createdAt}`,
+      })
+      .then((res) => {
+        console.log(res.status);
+        this.props.history.push('/');
+      })
+      .catch((err) => {
+        alert(err);
+        console.log(err);
+      });
   };
 
   required = (value) => (value ? undefined : 'Required');
@@ -19,120 +49,155 @@ class FinalForm extends Component {
   render() {
     return (
       <div>
-        <h1>Final Form</h1>
-        <Form
-          onSubmit={this.onSubmit}
-          validate={(values) => {
-            const errors = {};
-            if (values.password !== values.confirmPassword) {
-              errors.confirmPassword = 'Must Match';
-            }
-            return errors;
-          }}
-          initialValues={{
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-          }}
-          render={({ handleSubmit, form }) => (
-            <form onSubmit={handleSubmit}>
-              {/* will require field level validation to check individual values */}
-              <div>
-                <label>First Name</label>
-                <Field
-                  name="firstName"
-                  component="input"
-                  type="text"
-                  placeholder="First Name"
-                  validate={this.required}
-                >
-                  {({ input, meta }) => (
-                    <div>
-                      <input {...input} placeholder="First Name" />
-                      {meta.touched && meta.error && <span>{meta.error}</span>}
-                    </div>
-                  )}
-                </Field>
-              </div>
-              <div>
-                <label>Last Name</label>
-                <Field
-                  name="lastName"
-                  component="input"
-                  type="text"
-                  placeholder="Last Name"
-                  validate={this.required}
-                >
-                  {({ input, meta }) => (
-                    <div>
-                      <input {...input} placeholder="Last Name" />
-                      {meta.touched && meta.error && <span>{meta.error}</span>}
-                    </div>
-                  )}
-                </Field>
-              </div>
-              <div>
-                <label>Email</label>
-                <Field
-                  name="email"
-                  component="input"
-                  type="text"
-                  placeholder="email"
-                  validate={this.composeValidators(this.required, this.validEmail)}
-                >
-                  {({ input, meta }) => (
-                    <div>
-                      <input {...input} placeholder="Email" />
-                      {meta.touched && meta.error && <span>{meta.error}</span>}
-                    </div>
-                  )}
-                </Field>
-              </div>
+        <h1 className="ui center aligned header">Sign Up</h1>
+        <div className="ui placeholder segment">
+          <div className="ui two column very relaxed stackable grid">
+            <div className="column">
+              <Form
+                onSubmit={this.onSubmit}
+                validate={(values) => {
+                  const errors = {};
+                  if (values.password !== values.confirmPassword) {
+                    errors.confirmPassword = 'Must Match';
+                  }
+                  return errors;
+                }}
+                initialValues={{
+                  firstName: '',
+                  lastName: '',
+                  email: '',
+                  password: '',
+                  confirmPassword: '',
+                }}
+                render={({ handleSubmit, form }) => (
+                  <form
+                    className="ui form attached fluid segment"
+                    onSubmit={handleSubmit}
+                  >
+                    {/* will require field level validation to check individual values */}
+                    <div className="ui stacked segment">
+                      <div className="two fields">
+                        <div className="field">
+                          {/* <label>First Name</label> */}
+                          <Field
+                            name="firstName"
+                            component="input"
+                            type="text"
+                            placeholder="First Name"
+                            validate={this.required}
+                          >
+                            {({ input, meta }) => (
+                              <div>
+                                <input {...input} placeholder="First Name" />
+                                {meta.touched && meta.error && (
+                                  <span>{meta.error}</span>
+                                )}
+                              </div>
+                            )}
+                          </Field>
+                        </div>
+                        <div className="field">
+                          {/* <label>Last Name</label> */}
+                          <Field
+                            name="lastName"
+                            component="input"
+                            type="text"
+                            placeholder="Last Name"
+                            validate={this.required}
+                          >
+                            {({ input, meta }) => (
+                              <div>
+                                <input {...input} placeholder="Last Name" />
+                                {meta.touched && meta.error && (
+                                  <span>{meta.error}</span>
+                                )}
+                              </div>
+                            )}
+                          </Field>
+                        </div>
+                      </div>
+                      <div className="field">
+                        {/* <label>Email</label> */}
+                        <Field
+                          name="email"
+                          component="input"
+                          type="text"
+                          placeholder="email"
+                          validate={this.composeValidators(
+                            this.required,
+                            this.validEmail
+                          )}
+                        >
+                          {({ input, meta }) => (
+                            <div>
+                              <input {...input} placeholder="Email" />
+                              {meta.touched && meta.error && (
+                                <span>{meta.error}</span>
+                              )}
+                            </div>
+                          )}
+                        </Field>
+                      </div>
 
-              {/* Require record level validation for password and confirm password */}
+                      {/* Require record level validation for password and confirm password */}
 
-              <div>
-                <label>Password</label>
-                <Field
-                  name="password"
-                  component="input"
-                  type="password"
-                  placeholder="password"
-                  validate={this.required}
-                >
-                  {({ input, meta }) => (
-                    <div>
-                      <input {...input} placeholder="Password" />
-                      {meta.touched && meta.error && <span>{meta.error}</span>}
+                      <div className="field">
+                        {/* <label>Password</label> */}
+                        <Field
+                          name="password"
+                          component="input"
+                          type="password"
+                          placeholder="password"
+                          validate={this.required}
+                        >
+                          {({ input, meta }) => (
+                            <div>
+                              <input {...input} placeholder="Password" />
+                              {meta.touched && meta.error && (
+                                <span>{meta.error}</span>
+                              )}
+                            </div>
+                          )}
+                        </Field>
+                      </div>
+                      <div className="field">
+                        {/* <label>Confirm Password</label> */}
+                        <Field
+                          name="confirmPassword"
+                          component="input"
+                          type="password"
+                          placeholder="confirmPassword"
+                          validate={this.required}
+                        >
+                          {({ input, meta }) => (
+                            <div>
+                              <input {...input} placeholder="Confirm Password" />
+                              {meta.touched && meta.error && (
+                                <span>{meta.error}</span>
+                              )}
+                            </div>
+                          )}
+                        </Field>
+                      </div>
+                      <div>
+                        <button className="ui submit button" type="submit">
+                          Submit
+                        </button>
+                      </div>
                     </div>
-                  )}
-                </Field>
+                  </form>
+                )}
+              />
+              <div className="ui bottom attached warning message">
+                Already have an Account? <Link to="/signup/login">Sign In</Link>
               </div>
-              <div>
-                <label>Confirm Password</label>
-                <Field
-                  name="confirmPassword"
-                  component="input"
-                  type="password"
-                  placeholder="confirmPassword"
-                  validate={this.required}
-                >
-                  {({ input, meta }) => (
-                    <div>
-                      <input {...input} placeholder="Confirm Password" />
-                      {meta.touched && meta.error && <span>{meta.error}</span>}
-                    </div>
-                  )}
-                </Field>
-              </div>
-              <div>
-                <button type="submit">Submit</button>
-              </div>
-            </form>
-          )}
-        />
+            </div>
+            <div className="middle aligned column">
+              <GoogleAuth />
+            </div>
+          </div>
+          <div className="ui vertical divider">OR</div>
+        </div>
       </div>
     );
   }

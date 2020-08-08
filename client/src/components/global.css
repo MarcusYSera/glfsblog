@@ -1,5 +1,16 @@
 body {
-  background: linear-gradient(lightpink, 20%, white);
+  /* background: rgb(255, 255, 255); */
+  /* background-image: url('../assets/svg/saku.png'); */
+  /* background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.5) 34%,
+    rgba(255, 125, 228, 0.5) 86%
+  ); */
+  background-image: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.5) 40%,
+      rgba(255, 125, 228, 0.35) 80%
+    ), url('../assets/svg/saku.svg');
 }
 
 .signupform {

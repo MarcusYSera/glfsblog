@@ -108,7 +108,7 @@ class SignUp extends Component {
           <div className="ui vertical divider">OR</div>
         </div>
         <div className="ui message">
-          Already have an Account? <Link to="/signup/signin">Sign In</Link>
+          Already have an Account? <Link to="/signup/login">Sign In</Link>
         </div>
       </div>
     );

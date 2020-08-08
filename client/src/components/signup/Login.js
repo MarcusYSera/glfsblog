@@ -18,9 +18,14 @@ class Login extends Component {
     const { email, pass } = this.state;
     return (
       <div className="signupform">
-        <h1 className="ui center aligned header">Sign In</h1>
+        <h1 className="ui center aligned header">Login</h1>
         <div className="ui center aligned basic segment">
-          <form className="ui form" onSubmit={this.onFormSubmit}>
+          <GoogleAuth />
+          <div className="ui horizontal divider">OR</div>
+          <form
+            className="ui form attached fluid segment"
+            onSubmit={this.onFormSubmit}
+          >
             <div className="ui stacked segment">
               <div className="field">
                 <input
@@ -43,11 +48,9 @@ class Login extends Component {
               <input type="submit" value="Submit" />
             </div>
           </form>
-          <div className="ui horizontal divider">OR</div>
-          <GoogleAuth />
-        </div>
-        <div className="ui message">
-          Need an Account? <Link to="/signup/SignUp">Sign Up</Link>
+          <div className="ui bottom attached warning message">
+            Need an Account? <Link to="/signup/FinalForm">Sign Up</Link>
+          </div>
         </div>
       </div>
     );
