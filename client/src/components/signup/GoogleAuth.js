@@ -33,27 +33,26 @@ class GoogleAuth extends Component {
     });
   }
 
-  // componentWillUnmount() {
-  //   console.log('unmount');
-  //   this.auth = window.gapi.auth2.getAuthInstance();
-  //   if (this.auth.isSignedIn.get()) {
-  //     const googleId = this.auth.currentUser.get().getId();
-  //     console.log(googleId);
-  //     this.setState({
-  //       signedIn: googleId,
-  //       userName: this.auth.currentUser.get().getBasicProfile().getGivenName(),
-  //     });
-  //   }
-  //   console.log(this.state);
-  // }
-
-  trackUser = (idSet, userFirstName) => {
-    this.setState({
-      signedIn: idSet,
-      userName: userFirstName,
-    });
+  componentDidUpdate() {
+    if (this.auth.isSignedIn.get() && this.state.signedIn === '') {
+      const googleId = this.auth.currentUser.get().getId();
+      const googleUser = this.auth.currentUser
+        .get()
+        .getBasicProfile()
+        .getGivenName();
+      this.setState({
+        signedIn: googleId,
+        userName: googleUser,
+      });
+    }
+    if (!this.auth.isSignedIn.get() && this.state.signedIn) {
+      this.setState({
+        signedIn: '',
+        userName: '',
+      });
+    }
     console.log(this.state);
-  };
+  }
 
   onAuthChange = (isSignedIn) => {
     const { signIn: signInProp, signOut: signOutProp, createNewUser } = this.props;
@@ -68,7 +67,6 @@ class GoogleAuth extends Component {
       const userFirstName = basicProfile.getGivenName();
       const userLastName = basicProfile.getFamilyName();
 
-      this.trackUser(idSet, userFirstName);
       if (createNewUser) {
         const today = new Date();
         glfsBlogDB
