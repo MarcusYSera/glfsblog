@@ -33,6 +33,28 @@ class GoogleAuth extends Component {
     });
   }
 
+  // componentWillUnmount() {
+  //   console.log('unmount');
+  //   this.auth = window.gapi.auth2.getAuthInstance();
+  //   if (this.auth.isSignedIn.get()) {
+  //     const googleId = this.auth.currentUser.get().getId();
+  //     console.log(googleId);
+  //     this.setState({
+  //       signedIn: googleId,
+  //       userName: this.auth.currentUser.get().getBasicProfile().getGivenName(),
+  //     });
+  //   }
+  //   console.log(this.state);
+  // }
+
+  trackUser = (idSet, userFirstName) => {
+    this.setState({
+      signedIn: idSet,
+      userName: userFirstName,
+    });
+    console.log(this.state);
+  };
+
   onAuthChange = (isSignedIn) => {
     const { signIn: signInProp, signOut: signOutProp, createNewUser } = this.props;
     if (isSignedIn) {
@@ -46,11 +68,7 @@ class GoogleAuth extends Component {
       const userFirstName = basicProfile.getGivenName();
       const userLastName = basicProfile.getFamilyName();
 
-      this.setState({
-        signedIn: idSet,
-        userName: userFirstName,
-      });
-
+      this.trackUser(idSet, userFirstName);
       if (createNewUser) {
         const today = new Date();
         glfsBlogDB
@@ -70,7 +88,6 @@ class GoogleAuth extends Component {
             console.log(err);
           });
       }
-
     } else {
       signOutProp();
     }

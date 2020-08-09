@@ -10,8 +10,6 @@ import GoogleAuth from './GoogleAuth';
 import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class FinalForm extends Component {
-  // state = { createdAt: '' };
-
   // componentDidMount = (e) => {
   //   const today = new Date();
   //   this.setState({
@@ -20,7 +18,6 @@ class FinalForm extends Component {
   // };
 
   onSubmit = (e) => {
-    // const { createdAt } = this.state;
     const today = new Date();
     console.log(`onSubmit callback here: ${JSON.stringify(e)}`);
 
