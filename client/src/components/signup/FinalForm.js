@@ -10,12 +10,6 @@ import GoogleAuth from './GoogleAuth';
 import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class FinalForm extends Component {
-  // componentDidMount = (e) => {
-  //   const today = new Date();
-  //   this.setState({
-  //     createdAt: today,
-  //   });
-  // };
 
   onSubmit = (e) => {
     const today = new Date();

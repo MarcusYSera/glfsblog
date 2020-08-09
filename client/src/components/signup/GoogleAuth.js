@@ -27,6 +27,8 @@ class GoogleAuth extends Component {
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
+          this.currentUser = this.auth.currentUser.get();
+          this.userBasicInfo = this.currentUser.getBasicProfile();
           this.onAuthChange(this.auth.isSignedIn.get());
           this.auth.isSignedIn.listen(this.onAuthChange);
         });
@@ -35,11 +37,8 @@ class GoogleAuth extends Component {
 
   componentDidUpdate() {
     if (this.auth.isSignedIn.get() && this.state.signedIn === '') {
-      const googleId = this.auth.currentUser.get().getId();
-      const googleUser = this.auth.currentUser
-        .get()
-        .getBasicProfile()
-        .getGivenName();
+      const googleId = this.currentUser.getId();
+      const googleUser = this.userBasicInfo.getGivenName();
       this.setState({
         signedIn: googleId,
         userName: googleUser,
@@ -59,16 +58,12 @@ class GoogleAuth extends Component {
     if (isSignedIn) {
       signInProp(this.auth.currentUser.get().getId());
 
-      const getInfo = this.auth.currentUser.get();
-      const basicProfile = getInfo.getBasicProfile();
-
-      const idSet = getInfo.getId();
-      const userEmail = basicProfile.getEmail();
-      const userFirstName = basicProfile.getGivenName();
-      const userLastName = basicProfile.getFamilyName();
-
       if (createNewUser) {
         const today = new Date();
+        const idSet = this.currentUser.getId();
+        const userEmail = this.userBasicInfo.getEmail();
+        const userFirstName = this.userBasicInfo.getGivenName();
+        const userLastName = this.userBasicInfo.getFamilyName();
         glfsBlogDB
           .post('/api/users', {
             gmailID: `${idSet}`,

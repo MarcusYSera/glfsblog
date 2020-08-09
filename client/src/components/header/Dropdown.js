@@ -45,12 +45,6 @@ class Dropdown extends Component {
               <Link to="/">
                 <div className="item">Home</div>
               </Link>
-              <Link to="/signup/login">
-                <div className="item">Login</div>
-              </Link>
-              <Link to="/signup/finalform">
-                <div className="item">Final Form</div>
-              </Link>
               <Link to="/admin/Admin">
                 <div className="item">Admin Page</div>
               </Link>
@@ -65,6 +59,9 @@ class Dropdown extends Component {
               </Link>
               <Link to="/blogs/view/:id">
                 <div className="item">View Blog Post</div>
+              </Link>
+              <Link to="/signup/login">
+                <div className="item">Login</div>
               </Link>
             </div>
           )}
