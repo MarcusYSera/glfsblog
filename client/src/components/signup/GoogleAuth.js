@@ -12,8 +12,6 @@ class GoogleAuth extends Component {
     super(props);
     this.state = {
       createNewUser: props.createNewUser,
-      signedIn: '',
-      userName: '',
     };
   }
 
@@ -35,52 +33,50 @@ class GoogleAuth extends Component {
     });
   }
 
-  componentDidUpdate() {
-    if (this.auth.isSignedIn.get() && this.state.signedIn === '') {
-      const googleId = this.currentUser.getId();
-      const googleUser = this.userBasicInfo.getGivenName();
-      this.setState({
-        signedIn: googleId,
-        userName: googleUser,
-      });
-    }
-    if (!this.auth.isSignedIn.get() && this.state.signedIn) {
-      this.setState({
-        signedIn: '',
-        userName: '',
-      });
-    }
-    console.log(this.state);
-  }
+  // componentDidUpdate() {
+  //   if (this.auth.isSignedIn.get() && this.state.signedIn === '') {
+  //     const googleId = this.currentUser.getId();
+  //     const googleUser = this.userBasicInfo.getGivenName();
+  //     this.setState({
+  //       signedIn: googleId,
+  //       userName: googleUser,
+  //     });
+  //   }
+  //   if (!this.auth.isSignedIn.get() && this.state.signedIn) {
+  //     this.setState({
+  //       signedIn: '',
+  //       userName: '',
+  //     });
+  //   }
+  //   console.log(this.state);
+  // }
 
   onAuthChange = (isSignedIn) => {
     const { signIn: signInProp, signOut: signOutProp, createNewUser } = this.props;
     if (isSignedIn) {
-      signInProp(this.auth.currentUser.get().getId());
+      signInProp(
+        this.currentUser.getId(),
+        this.auth.currentUser.get().getBasicProfile().getGivenName()
+      );
 
       if (createNewUser) {
-        const today = new Date();
-        const idSet = this.currentUser.getId();
-        const userEmail = this.userBasicInfo.getEmail();
-        const userFirstName = this.userBasicInfo.getGivenName();
-        const userLastName = this.userBasicInfo.getFamilyName();
         glfsBlogDB
           .post('/api/users', {
-            gmailID: `${idSet}`,
-            firstName: `${userFirstName}`,
-            lastName: `${userLastName}`,
-            email: `${userEmail}`,
-            createdAt: `${today}`,
+            gmailID: `${this.currentUser.getId()}`,
+            firstName: `${this.userBasicInfo.getGivenName()}`,
+            lastName: `${this.userBasicInfo.getFamilyName()}`,
+            email: `${this.userBasicInfo.getEmail()}`,
+            createdAt: `${new Date()}`,
           })
           .then((res) => {
             console.log(res.status);
-            this.props.history.push('/');
           })
           .catch((err) => {
-            alert(err);
+            // alert(err);
             console.log(err);
           });
       }
+      this.props.history.push('/');
     } else {
       signOutProp();
     }
@@ -141,6 +137,7 @@ GoogleAuth.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
+  // console.log(state);
   return { isSignedIn: state.auth.isSignedIn };
 };
 

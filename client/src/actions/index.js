@@ -20,10 +20,10 @@ export const selectBlog = (blog) => {
 };
 
 // Google Auth Flow
-export const signIn = (userId) => {
+export const signIn = (userId, firstName) => {
   return {
     type: SIGN_IN,
-    payload: userId,
+    payload: {userId, firstName},
   };
 };
 

@@ -1,10 +1,31 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+
+import { signIn, signOut } from '../../actions';
 
 import './dropdown.css';
 
 class Dropdown extends Component {
-  state = { open: false };
+  constructor(props) {
+    super(props);
+    this.state = { open: false };
+  }
+
+  componentDidMount() {
+    window.gapi.load('client:auth2', () => {
+      window.gapi.client
+        .init({
+          clientId:
+            '497745475816-s1se1ef8qio68uoat80f87bdmmbmtg33.apps.googleusercontent.com',
+          scope: ('email', 'profile'),
+        })
+        .then(() => {
+          this.auth = window.gapi.auth2.getAuthInstance();
+        });
+    });
+  }
 
   clickDropdown = () => {
     const { open } = this.state;
@@ -24,6 +45,37 @@ class Dropdown extends Component {
     }
     this.clickDropdown();
   };
+
+  signOutUser(signOutProp, auth) {
+    // const { signOut: signOutProp } = this.props;
+    // const { signOut: signOutProp } = this.props;
+    auth.signOut();
+    signOutProp();
+  }
+
+  renderSignInOutButton() {
+    console.log(this.props);
+    const { isSignedIn, signOut: signOutProp } = this.props;
+    if (isSignedIn) {
+      return (
+        <Link to="/">
+          <div
+            className="item"
+            onClick={() => this.signOutUser(signOutProp, this.auth)}
+          >
+            Sign Out
+          </div>
+        </Link>
+      );
+    }
+    if (!isSignedIn) {
+      return (
+        <Link to="/signup/login">
+          <div className="item">Login</div>
+        </Link>
+      );
+    }
+  }
 
   render() {
     const { open } = this.state;
@@ -60,9 +112,7 @@ class Dropdown extends Component {
               <Link to="/blogs/view/:id">
                 <div className="item">View Blog Post</div>
               </Link>
-              <Link to="/signup/login">
-                <div className="item">Login</div>
-              </Link>
+              <div>{this.renderSignInOutButton()}</div>
             </div>
           )}
         </div>
@@ -71,4 +121,12 @@ class Dropdown extends Component {
   }
 }
 
-export default Dropdown;
+const mapStateToProps = (state) => {
+  console.log(state.auth);
+  return {
+    isSignedIn: state.auth.isSignedIn,
+    userName: state.auth.userId,
+  };
+};
+
+export default connect(mapStateToProps, { signIn, signOut })(Dropdown);
