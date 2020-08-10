@@ -36,9 +36,9 @@ class GoogleAuth extends Component {
 
   onAuthChange = (isSignedIn) => {
     const { signIn: signInProp, signOut: signOutProp, createNewUser } = this.props;
-    if (isSignedIn) {
+    if (isSignedIn && this.auth.isSignedIn.get()) {
       signInProp(
-        this.currentUser.getId(),
+        this.currentUser.getId()
         // this.auth.currentUser.get().getBasicProfile().getGivenName()
       );
 
@@ -59,6 +59,7 @@ class GoogleAuth extends Component {
             console.log(err);
           });
       }
+      console.log('approaching redirect to home');
       this.props.history.push('/');
     } else {
       signOutProp();

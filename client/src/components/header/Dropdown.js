@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 
@@ -53,10 +53,15 @@ class Dropdown extends Component {
   signOutUser(signOutProp, auth) {
     auth.signOut();
     signOutProp();
+    this.signOut();
+  }
+
+  signOut() {
+    console.log('redirect to login');
+    this.props.history.push('/signup/login');
   }
 
   renderSignInOutButton() {
-    // console.log(this.props);
     const { isSignedIn, signOut: signOutProp } = this.props;
     if (isSignedIn) {
       return (
@@ -70,14 +75,14 @@ class Dropdown extends Component {
           <Link to="/blogs/view/:id">
             <div className="item">View Blog Post</div>
           </Link>
-          <Link to="/">
-            <div
-              className="item"
-              onClick={() => this.signOutUser(signOutProp, this.auth)}
-            >
-              Sign Out
-            </div>
-          </Link>
+          {/* <Link to="/signup/login"> */}
+          <div
+            className="item"
+            onClick={() => this.signOutUser(signOutProp, this.auth)}
+          >
+            Sign Out
+          </div>
+          {/* </Link> */}
         </div>
       );
     }
@@ -90,9 +95,8 @@ class Dropdown extends Component {
     }
   }
   render() {
-    const { isSignedIn } = this.props;
+    // const { isSignedIn } = this.props;
     const { open } = this.state;
-    console.log(isSignedIn);
     return (
       <div
         className="ui right dropdown link item"
@@ -133,4 +137,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { signIn, signOut })(Dropdown);
+export default connect(mapStateToProps, { signIn, signOut })(withRouter(Dropdown));
