@@ -7,14 +7,6 @@ import Dropdown from './Dropdown';
 class Header extends Component {
   // state = {loggedIn: false}
 
-  componentDidMount() {
-    console.log(`header did mount ${this.state}`);
-  }
-
-  componentDidUpdate() {
-    console.log(`header update ${this.state}`);
-  }
-
   render() {
     return (
       <div className="ui borderless main menu">

@@ -27,36 +27,19 @@ class GoogleAuth extends Component {
           this.auth = window.gapi.auth2.getAuthInstance();
           this.currentUser = this.auth.currentUser.get();
           this.userBasicInfo = this.currentUser.getBasicProfile();
+
           this.onAuthChange(this.auth.isSignedIn.get());
           this.auth.isSignedIn.listen(this.onAuthChange);
         });
     });
   }
 
-  // componentDidUpdate() {
-  //   if (this.auth.isSignedIn.get() && this.state.signedIn === '') {
-  //     const googleId = this.currentUser.getId();
-  //     const googleUser = this.userBasicInfo.getGivenName();
-  //     this.setState({
-  //       signedIn: googleId,
-  //       userName: googleUser,
-  //     });
-  //   }
-  //   if (!this.auth.isSignedIn.get() && this.state.signedIn) {
-  //     this.setState({
-  //       signedIn: '',
-  //       userName: '',
-  //     });
-  //   }
-  //   console.log(this.state);
-  // }
-
   onAuthChange = (isSignedIn) => {
     const { signIn: signInProp, signOut: signOutProp, createNewUser } = this.props;
     if (isSignedIn) {
       signInProp(
         this.currentUser.getId(),
-        this.auth.currentUser.get().getBasicProfile().getGivenName()
+        // this.auth.currentUser.get().getBasicProfile().getGivenName()
       );
 
       if (createNewUser) {
@@ -133,7 +116,7 @@ GoogleAuth.propTypes = {
 GoogleAuth.defaultProps = {
   signIn() {},
   signOut() {},
-  isSignedIn: false,
+  isSignedIn: null,
 };
 
 const mapStateToProps = (state) => {

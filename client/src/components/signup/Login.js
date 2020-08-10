@@ -8,6 +8,10 @@ import GoogleAuth from './GoogleAuth';
 class Login extends Component {
   state = { email: '', pass: '' };
 
+  componentDidMount() {
+    // need to initialize db to check against registered users
+  }
+
   onFormSubmit = (e) => {
     e.preventDefault();
     const { email, pass } = this.state;

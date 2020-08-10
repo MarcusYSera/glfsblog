@@ -14,6 +14,7 @@ class Dropdown extends Component {
   }
 
   componentDidMount() {
+    const { isSignedIn } = this.props;
     window.gapi.load('client:auth2', () => {
       window.gapi.client
         .init({
@@ -23,6 +24,9 @@ class Dropdown extends Component {
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
+          if (isSignedIn === null) {
+            this.auth.signOut();
+          }
         });
     });
   }
@@ -47,25 +51,34 @@ class Dropdown extends Component {
   };
 
   signOutUser(signOutProp, auth) {
-    // const { signOut: signOutProp } = this.props;
-    // const { signOut: signOutProp } = this.props;
     auth.signOut();
     signOutProp();
   }
 
   renderSignInOutButton() {
-    console.log(this.props);
+    // console.log(this.props);
     const { isSignedIn, signOut: signOutProp } = this.props;
     if (isSignedIn) {
       return (
-        <Link to="/">
-          <div
-            className="item"
-            onClick={() => this.signOutUser(signOutProp, this.auth)}
-          >
-            Sign Out
-          </div>
-        </Link>
+        <div>
+          <Link to="/blogs/new">
+            <div className="item">New Blog Post</div>
+          </Link>
+          <Link to="/blogs/edit/:id">
+            <div className="item">Edit Blog Post</div>
+          </Link>
+          <Link to="/blogs/view/:id">
+            <div className="item">View Blog Post</div>
+          </Link>
+          <Link to="/">
+            <div
+              className="item"
+              onClick={() => this.signOutUser(signOutProp, this.auth)}
+            >
+              Sign Out
+            </div>
+          </Link>
+        </div>
       );
     }
     if (!isSignedIn) {
@@ -76,9 +89,10 @@ class Dropdown extends Component {
       );
     }
   }
-
   render() {
+    const { isSignedIn } = this.props;
     const { open } = this.state;
+    console.log(isSignedIn);
     return (
       <div
         className="ui right dropdown link item"
@@ -97,22 +111,13 @@ class Dropdown extends Component {
               <Link to="/">
                 <div className="item">Home</div>
               </Link>
-              <Link to="/admin/Admin">
-                <div className="item">Admin Page</div>
-              </Link>
-              <Link to="/blogs/new">
-                <div className="item">New Blog Post</div>
-              </Link>
               <Link to="/blogs/list">
-                <div className="item">View All Blog</div>
+                <div className="item">View All Blogs</div>
               </Link>
-              <Link to="/blogs/edit/:id">
-                <div className="item">Edit Blog Post</div>
-              </Link>
-              <Link to="/blogs/view/:id">
-                <div className="item">View Blog Post</div>
-              </Link>
-              <div>{this.renderSignInOutButton()}</div>
+              {/* <Link to="/admin/Admin">
+                <div className="item">Admin Page</div>
+              </Link> */}
+              {this.renderSignInOutButton()}
             </div>
           )}
         </div>
@@ -122,7 +127,6 @@ class Dropdown extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.auth);
   return {
     isSignedIn: state.auth.isSignedIn,
     userName: state.auth.userId,
