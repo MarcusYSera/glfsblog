@@ -1,6 +1,7 @@
-*{
-  /* background: darkslategrey; */
-}
-/* .column{
-  max-width: 450px;
+/* * {
+  background: darkslategrey;
 } */
+.signupform {
+  max-width: 450px;
+  margin: auto;
+}

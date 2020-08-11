@@ -26,7 +26,7 @@ class Admin extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { users: state.users };
+  return { users: state.viewUsersInState };
 };
 
 export default connect(mapStateToProps, { viewUserAction })(Admin);
