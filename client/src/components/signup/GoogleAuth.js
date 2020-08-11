@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { signIn, signOut } from '../../actions';
+import { signIn, signOut, createUserAction } from '../../actions';
+
+import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class GoogleAuth extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      createNewUser: props.createNewUser,
+    };
+  }
+
   componentDidMount() {
     window.gapi.load('client:auth2', () => {
       window.gapi.client
@@ -15,6 +25,9 @@ class GoogleAuth extends Component {
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
+          this.currentUser = this.auth.currentUser.get();
+          this.userBasicInfo = this.currentUser.getBasicProfile();
+
           this.onAuthChange(this.auth.isSignedIn.get());
           this.auth.isSignedIn.listen(this.onAuthChange);
         });
@@ -22,13 +35,32 @@ class GoogleAuth extends Component {
   }
 
   onAuthChange = (isSignedIn) => {
-    const { signIn: signInProp, signOut: signOutProp } = this.props;
+    const { signIn: signInProp, signOut: signOutProp, createNewUser } = this.props;
     if (isSignedIn) {
-      signInProp(this.auth.currentUser.get().getId());
-      // console.log(this.auth.currentUser.get().getBasicProfile());
-      console.log(this.auth.currentUser.get().getBasicProfile().getEmail());
-      console.log(this.auth.currentUser.get().getBasicProfile().getName());
-      console.log(this.auth.currentUser.get().getId());
+      signInProp(
+        this.auth.isSignedIn.get(),
+        this.currentUser.getId(),
+        this.auth.currentUser.get().getBasicProfile().getGivenName()
+      );
+
+      if (createNewUser) {
+        glfsBlogDB
+          .post('/api/users', {
+            gmailID: `${this.currentUser.getId()}`,
+            firstName: `${this.userBasicInfo.getGivenName()}`,
+            lastName: `${this.userBasicInfo.getFamilyName()}`,
+            email: `${this.userBasicInfo.getEmail()}`,
+            createdAt: `${new Date()}`,
+          })
+          .then((res) => {
+            console.log(res.status);
+          })
+          .catch((err) => {
+            // alert(err);
+            console.log(err);
+          });
+      }
+      this.props.history.push('/');
     } else {
       signOutProp();
     }
@@ -85,11 +117,14 @@ GoogleAuth.propTypes = {
 GoogleAuth.defaultProps = {
   signIn() {},
   signOut() {},
-  isSignedIn: false,
+  isSignedIn: null,
 };
 
 const mapStateToProps = (state) => {
+  // console.log(state);
   return { isSignedIn: state.auth.isSignedIn };
 };
 
-export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth);
+export default connect(mapStateToProps, { signIn, signOut, createUserAction })(
+  withRouter(GoogleAuth)
+);

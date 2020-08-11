@@ -10,6 +10,7 @@ export const blogsReducer = () => {
 };
 
 export const selectedBlogReducer = (selectedBlog = null, action) => {
+  // determins if action is relevant
   if (action.type === BLOG_SELECTED) {
     return action.payload;
   }

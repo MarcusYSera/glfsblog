@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+import { Form, Field } from 'react-final-form';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { signIn } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
 
@@ -7,6 +12,10 @@ import GoogleAuth from './GoogleAuth';
 
 class Login extends Component {
   state = { email: '', pass: '' };
+
+  componentDidMount() {
+    // need to initialize db to check against registered users
+  }
 
   onFormSubmit = (e) => {
     e.preventDefault();
@@ -18,9 +27,14 @@ class Login extends Component {
     const { email, pass } = this.state;
     return (
       <div className="signupform">
-        <h1 className="ui center aligned header">Sign In</h1>
+        <h1 className="ui center aligned header">Login</h1>
         <div className="ui center aligned basic segment">
-          <form className="ui form" onSubmit={this.onFormSubmit}>
+          <GoogleAuth createNewUser={false} />
+          <div className="ui horizontal divider">OR</div>
+          <form
+            className="ui form attached fluid segment"
+            onSubmit={this.onFormSubmit}
+          >
             <div className="ui stacked segment">
               <div className="field">
                 <input
@@ -43,15 +57,18 @@ class Login extends Component {
               <input type="submit" value="Submit" />
             </div>
           </form>
-          <div className="ui horizontal divider">OR</div>
-          <GoogleAuth />
-        </div>
-        <div className="ui message">
-          Need an Account? <Link to="/signup/SignUp">Sign Up</Link>
+          <div className="ui bottom attached warning message">
+            Need an Account? <Link to="/signup/FinalForm">Sign Up</Link>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return state;
+};
+
+export default connect(mapStateToProps)(Login);

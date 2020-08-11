@@ -2,9 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  firstName: {
+  gmailID: {
     type: String,
     required: false
+  },
+  firstName: {
+    type: String,
+    required: [true, 'Name is required.']
   },
   lastName: {
     type: String,
@@ -20,15 +24,15 @@ const UserSchema = new Schema({
   // },
   email: {
     type: String,
-    required: true
+    // required: true
   },
   password: {
     type: String,
-    required: false
+    // required: false
   },
   createdAt: {
     type: String,
-    required: false
+    // required: false
   }
 });
 
