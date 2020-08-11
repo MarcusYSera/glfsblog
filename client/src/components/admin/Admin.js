@@ -4,6 +4,7 @@ import { viewUserAction } from '../../actions';
 
 class Admin extends Component {
   componentDidMount() {
+    console.log('viewing user from db');
     this.props.viewUserAction();
   }
 

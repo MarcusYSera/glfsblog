@@ -14,7 +14,6 @@ class Dropdown extends Component {
   }
 
   componentDidMount() {
-    const { isSignedIn } = this.props;
     window.gapi.load('client:auth2', () => {
       window.gapi.client
         .init({
@@ -24,9 +23,6 @@ class Dropdown extends Component {
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
-          if (isSignedIn === null) {
-            this.auth.signOut();
-          }
         });
     });
   }
@@ -75,14 +71,13 @@ class Dropdown extends Component {
           <Link to="/blogs/view/:id">
             <div className="item">View Blog Post</div>
           </Link>
-          {/* <Link to="/signup/login"> */}
+          {/* don't forget to add mouse change to pointer on hover over for sign out */}
           <div
             className="item"
             onClick={() => this.signOutUser(signOutProp, this.auth)}
           >
             Sign Out
           </div>
-          {/* </Link> */}
         </div>
       );
     }
@@ -95,7 +90,6 @@ class Dropdown extends Component {
     }
   }
   render() {
-    // const { isSignedIn } = this.props;
     const { open } = this.state;
     return (
       <div
@@ -131,9 +125,11 @@ class Dropdown extends Component {
 }
 
 const mapStateToProps = (state) => {
+  // console.log(state);
   return {
     isSignedIn: state.auth.isSignedIn,
     userName: state.auth.userId,
+    firstName: state.auth.firstName,
   };
 };
 

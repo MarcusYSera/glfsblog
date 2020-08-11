@@ -38,8 +38,9 @@ class GoogleAuth extends Component {
     const { signIn: signInProp, signOut: signOutProp, createNewUser } = this.props;
     if (isSignedIn) {
       signInProp(
-        this.currentUser.getId()
-        // this.auth.currentUser.get().getBasicProfile().getGivenName()
+        this.auth.isSignedIn.get(),
+        this.currentUser.getId(),
+        this.auth.currentUser.get().getBasicProfile().getGivenName()
       );
 
       if (createNewUser) {

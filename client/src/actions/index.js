@@ -12,18 +12,20 @@ import {
   DELETE_USER,
 } from './types';
 
+// action creator
 export const selectBlog = (blog) => {
   return {
+    // action
     type: BLOG_SELECTED,
     payload: blog,
   };
 };
 
 // Google Auth Flow
-export const signIn = (userId, firstName) => {
+export const signIn = (isSignedIn, userId, firstName) => {
   return {
     type: SIGN_IN,
-    payload: {userId, firstName},
+    payload: {isSignedIn, userId, firstName},
   };
 };
 
