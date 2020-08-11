@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+import { Form, Field } from 'react-final-form';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { signIn } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
 
@@ -61,4 +66,9 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return state;
+};
+
+export default connect(mapStateToProps)(Login);

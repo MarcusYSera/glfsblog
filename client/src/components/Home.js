@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const Home = (props) => {
-  console.log('props from home page');
-  console.log(props);
+  // console.log('props from home page');
+  // console.log(props);
   return (
     <div>
       <h1>Welcome {props.auth.firstName}</h1>

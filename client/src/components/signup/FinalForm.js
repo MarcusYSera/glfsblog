@@ -3,14 +3,13 @@ import { Form, Field } from 'react-final-form';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { createUserAction } from '../../actions';
+import { createUserAction, signIn } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
 
 import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class FinalForm extends Component {
-
   onSubmit = (e) => {
     const today = new Date();
     console.log(`onSubmit callback here: ${JSON.stringify(e)}`);
