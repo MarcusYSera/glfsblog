@@ -3,7 +3,7 @@ import { Form, Field } from 'react-final-form';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { createUserAction, signIn } from '../../actions';
+import { createUserAction } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
 
