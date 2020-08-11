@@ -51,13 +51,13 @@ class Dropdown extends Component {
   };
 
   signOutUser(signOutProp, auth) {
-    auth.signOut();
-    signOutProp();
-    this.signOut();
+    auth.signOut().then(() => {
+      signOutProp();
+      this.signOut();
+    });
   }
 
   signOut() {
-    console.log('redirect to login');
     this.props.history.push('/signup/login');
   }
 
