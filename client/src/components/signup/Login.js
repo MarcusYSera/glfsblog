@@ -1,30 +1,77 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 // import { signIn } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
 
-// import InputField from './InputField';
+import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class Login extends Component {
-
+  state = { currentUser: '', checkEmail: false };
   componentDidMount() {
     // need to initialize db to check against registered users
   }
 
   onSubmit = (e) => {
-    // e.preventDefault();
-    console.log('clicked submit button');
+    console.log('submit clicked');
+    if (e.email !== '') {
+      this.fetchUserFromDB(e.email);
+    }
   };
 
-  required = (value) => (value ? undefined : 'Required');
+  fetchUserFromDB = (email) => {
+    glfsBlogDB
+      .get(`/api/users/${email}`)
+      .then((res) => {
+        if (res.data !== '') {
+          this.setState({
+            currentUser: res.data,
+            checkEmail: true,
+          });
+          console.log(res.data);
+        } else {
+          this.setState({
+            checkEmail: true,
+          });
+          console.log('made it to db else');
+          return { email: 'No Account Associated with this Email' };
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // verifyEmail = async (values) => {
+  //   if (values.email) {
+  //     console.log(values);
+  //     await glfsBlogDB
+  //       .get(`/api/users/${values.email}`)
+  //       .then((res) => {
+  //         if (res.data !== '') {
+  //           this.setState({
+  //             currentUser: res.data,
+  //           });
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //     const { currentUser } = this.state;
+  //     if (currentUser === '') {
+  //       return { email: 'No Account Associated With This Email' };
+  //     }
+  //   }
+  // };
+
+  // required = (value) => (value ? undefined : 'Required');
 
   render() {
     const subscription = {};
+    const { currentUser, checkEmail } = this.state;
     return (
       <div className="signupform">
         <h1 className="ui center aligned header">Login</h1>
@@ -34,14 +81,21 @@ class Login extends Component {
           <Form
             onSubmit={this.onSubmit}
             subscription={subscription}
+            initialValues={{ email: '', password: '' }}
             validate={(values) => {
               const errors = {};
-              if (values.password !== values.confirmPassword) {
-                errors.confirmPassword = 'Must Match';
+              if (!values.email) {
+                errors.email = 'Must be filled in';
               }
-              return errors;
+              if (!values.password) {
+                errors.password = 'Cannot be Empty';
+              }
+              if (currentUser != '' && currentUser.password !== values.password) {
+                errors.password = 'Email and Password do not match.';
+                // errors.email = 'User Already Exists';
+              }
+              return Object.keys(errors).length ? errors : null;
             }}
-            initialValues={{ email: '', password: '' }}
             render={({ handleSubmit, form, values }) => (
               <form
                 className="ui form attached fluid segment"
@@ -54,7 +108,7 @@ class Login extends Component {
                       component="input"
                       type="text"
                       placeholder="Email"
-                      validate={this.required}
+                      // validate={this.required}
                     >
                       {({ input, meta }) => (
                         <div>
@@ -70,7 +124,7 @@ class Login extends Component {
                       component="input"
                       type="password"
                       placeholder="Password"
-                      validate={this.required}
+                      // validate={this.required}
                     >
                       {({ input, meta }) => (
                         <div>
@@ -80,9 +134,11 @@ class Login extends Component {
                       )}
                     </Field>
                   </div>
-                  <button className="ui submit button" type="submit">
-                    Submit
-                  </button>
+                  <div>
+                    <button className="ui submit button" type="submit">
+                      Submit
+                    </button>
+                  </div>
                 </div>
               </form>
             )}
