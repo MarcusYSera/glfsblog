@@ -5,7 +5,7 @@ import { Form, Field } from 'react-final-form';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-// import { signIn } from '../../actions';
+import { signIn } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
 
@@ -15,6 +15,7 @@ class Login extends Component {
   state = { currentUser: '' };
 
   onSubmit = async (values) => {
+    const { signIn: signInProp } = this.props;
     if (values.email !== '') {
       await glfsBlogDB
         .get(`/api/users/${values.email}`)
@@ -23,8 +24,9 @@ class Login extends Component {
             this.setState({
               currentUser: res.data,
             });
-            this.props.history.push('/');
             console.log(res.data);
+            signInProp(true, res.data._id, res.data.firstName);
+            this.props.history.push('/');
             return res.data;
           } else {
             this.setState({
@@ -40,7 +42,7 @@ class Login extends Component {
     }
     const { currentUser } = this.state;
     if (currentUser === '' && values.email !== '') {
-      return { email: 'No Account' };
+      return { email: 'No Account Associated With This Email' };
     }
   };
 
@@ -131,4 +133,4 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-export default connect(mapStateToProps)(withRouter(Login));
+export default connect(mapStateToProps, { signIn })(withRouter(Login));
