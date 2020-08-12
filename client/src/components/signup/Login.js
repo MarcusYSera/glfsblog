@@ -1,3 +1,5 @@
+// Connect to redux to save user info on login
+
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import { withRouter, Link } from 'react-router-dom';
@@ -13,7 +15,6 @@ class Login extends Component {
   state = { currentUser: '' };
 
   onSubmit = async (values) => {
-    console.log('submit clicked');
     if (values.email !== '') {
       await glfsBlogDB
         .get(`/api/users/${values.email}`)
@@ -22,13 +23,15 @@ class Login extends Component {
             this.setState({
               currentUser: res.data,
             });
-            console.log('successful login');
+            this.props.history.push('/');
+            console.log(res.data);
             return res.data;
           } else {
             this.setState({
               currentUser: res.data,
             });
-            return res.data;
+            console.log('login failed');
+            return null;
           }
         })
         .catch((err) => {

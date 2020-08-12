@@ -1,3 +1,5 @@
+// An account with this email already exists
+
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import { withRouter, Link } from 'react-router-dom';
@@ -10,26 +12,46 @@ import GoogleAuth from './GoogleAuth';
 import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class FinalForm extends Component {
-  onSubmit = (e) => {
-    const today = new Date();
-    console.log(`onSubmit callback here: ${JSON.stringify(e)}`);
+  state = { existingUser: false };
 
-    glfsBlogDB
-      .post('/api/users', {
-        firstName: `${e.firstName}`,
-        lastName: `${e.lastName}`,
-        email: `${e.email}`,
-        password: `${e.password}`,
-        createdAt: `${today}`,
-      })
+  onSubmit = async (values) => {
+    await glfsBlogDB
+      .get(`/api/users/${values.email}`)
       .then((res) => {
-        console.log(res.status);
-        this.props.history.push('/');
+        if (res.data !== '') {
+          this.setState({
+            existingUser: true,
+          });
+          return;
+        } else {
+          const today = new Date();
+          console.log(`onSubmit callback here: ${JSON.stringify(values)}`);
+          glfsBlogDB
+            .post('/api/users', {
+              firstName: `${values.firstName}`,
+              lastName: `${values.lastName}`,
+              email: `${values.email}`,
+              password: `${values.password}`,
+              createdAt: `${today}`,
+            })
+            .then((res) => {
+              console.log(res.status);
+              this.props.history.push('/');
+            })
+            .catch((err) => {
+              alert(err);
+              console.log(err);
+            });
+          return;
+        }
       })
       .catch((err) => {
-        alert(err);
         console.log(err);
       });
+    const { existingUser } = this.state;
+    if (existingUser) {
+      return { email: 'This Email is Already Registered' };
+    }
   };
 
   required = (value) => (value ? undefined : 'Required');
@@ -54,7 +76,7 @@ class FinalForm extends Component {
                 validate={(values) => {
                   const errors = {};
                   if (values.password !== values.confirmPassword) {
-                    errors.confirmPassword = 'Must Match';
+                    errors.confirmPassword = 'Password Does Not Match';
                   }
                   return errors;
                 }}
@@ -65,7 +87,7 @@ class FinalForm extends Component {
                   password: '',
                   confirmPassword: '',
                 }}
-                render={({ handleSubmit, form, values }) => (
+                render={({ submitError, handleSubmit, form, values }) => (
                   <form
                     className="ui form attached fluid segment"
                     onSubmit={handleSubmit}
@@ -127,8 +149,8 @@ class FinalForm extends Component {
                           {({ input, meta }) => (
                             <div>
                               <input {...input} placeholder="Email" />
-                              {meta.touched && meta.error && (
-                                <span>{meta.error}</span>
+                              {meta.touched && (meta.error || meta.submitError) && (
+                                <span>{meta.error || meta.submitError}</span>
                               )}
                             </div>
                           )}
@@ -200,7 +222,8 @@ class FinalForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state);
+  console.log('state from final form');
+  console.log(state);
   return state;
 };
 
