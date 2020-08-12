@@ -10,68 +10,40 @@ import GoogleAuth from './GoogleAuth';
 import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class Login extends Component {
-  state = { currentUser: '', checkEmail: false };
-  componentDidMount() {
-    // need to initialize db to check against registered users
-  }
+  state = { currentUser: '' };
 
-  onSubmit = (e) => {
+  onSubmit = async (values) => {
     console.log('submit clicked');
-    if (e.email !== '') {
-      this.fetchUserFromDB(e.email);
+    if (values.email !== '') {
+      await glfsBlogDB
+        .get(`/api/users/${values.email}`)
+        .then((res) => {
+          if (res.data !== '') {
+            this.setState({
+              currentUser: res.data,
+            });
+            console.log('successful login');
+            return res.data;
+          } else {
+            this.setState({
+              currentUser: res.data,
+            });
+            return res.data;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    const { currentUser } = this.state;
+    if (currentUser === '' && values.email !== '') {
+      return { email: 'No Account' };
     }
   };
 
-  fetchUserFromDB = (email) => {
-    glfsBlogDB
-      .get(`/api/users/${email}`)
-      .then((res) => {
-        if (res.data !== '') {
-          this.setState({
-            currentUser: res.data,
-            checkEmail: true,
-          });
-          console.log(res.data);
-        } else {
-          this.setState({
-            checkEmail: true,
-          });
-          console.log('made it to db else');
-          return { email: 'No Account Associated with this Email' };
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // verifyEmail = async (values) => {
-  //   if (values.email) {
-  //     console.log(values);
-  //     await glfsBlogDB
-  //       .get(`/api/users/${values.email}`)
-  //       .then((res) => {
-  //         if (res.data !== '') {
-  //           this.setState({
-  //             currentUser: res.data,
-  //           });
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //     const { currentUser } = this.state;
-  //     if (currentUser === '') {
-  //       return { email: 'No Account Associated With This Email' };
-  //     }
-  //   }
-  // };
-
-  // required = (value) => (value ? undefined : 'Required');
-
   render() {
     const subscription = {};
-    const { currentUser, checkEmail } = this.state;
+    const { currentUser } = this.state;
     return (
       <div className="signupform">
         <h1 className="ui center aligned header">Login</h1>
@@ -85,18 +57,17 @@ class Login extends Component {
             validate={(values) => {
               const errors = {};
               if (!values.email) {
-                errors.email = 'Must be filled in';
+                errors.email = 'Required';
               }
               if (!values.password) {
-                errors.password = 'Cannot be Empty';
+                errors.password = 'Required';
               }
-              if (currentUser != '' && currentUser.password !== values.password) {
+              if (currentUser !== '' && currentUser.password !== values.password) {
                 errors.password = 'Email and Password do not match.';
-                // errors.email = 'User Already Exists';
               }
-              return Object.keys(errors).length ? errors : null;
+              return errors;
             }}
-            render={({ handleSubmit, form, values }) => (
+            render={({ handleSubmit, form, values, submitError }) => (
               <form
                 className="ui form attached fluid segment"
                 onSubmit={handleSubmit}
@@ -108,12 +79,13 @@ class Login extends Component {
                       component="input"
                       type="text"
                       placeholder="Email"
-                      // validate={this.required}
                     >
                       {({ input, meta }) => (
                         <div>
                           <input {...input} placeholder="Email" />
-                          {meta.touched && meta.error && <span>{meta.error}</span>}
+                          {(meta.error || meta.submitError) && meta.touched && (
+                            <span>{meta.error || meta.submitError}</span>
+                          )}
                         </div>
                       )}
                     </Field>
@@ -124,7 +96,6 @@ class Login extends Component {
                       component="input"
                       type="password"
                       placeholder="Password"
-                      // validate={this.required}
                     >
                       {({ input, meta }) => (
                         <div>
