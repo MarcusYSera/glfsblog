@@ -1,62 +1,122 @@
+// Connect to redux to save user info on login
+
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
-import { signIn } from '../../actions';
+// import { signIn } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
 
-// import InputField from './InputField';
+import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class Login extends Component {
-  state = { email: '', pass: '' };
+  state = { currentUser: '' };
 
-  componentDidMount() {
-    // need to initialize db to check against registered users
-  }
-
-  onFormSubmit = (e) => {
-    e.preventDefault();
-    const { email, pass } = this.state;
-    console.log(`email: ${email} & password: ${pass}`);
+  onSubmit = async (values) => {
+    if (values.email !== '') {
+      await glfsBlogDB
+        .get(`/api/users/${values.email}`)
+        .then((res) => {
+          if (res.data !== '') {
+            this.setState({
+              currentUser: res.data,
+            });
+            this.props.history.push('/');
+            console.log(res.data);
+            return res.data;
+          } else {
+            this.setState({
+              currentUser: res.data,
+            });
+            console.log('login failed');
+            return null;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    const { currentUser } = this.state;
+    if (currentUser === '' && values.email !== '') {
+      return { email: 'No Account' };
+    }
   };
 
   render() {
-    const { email, pass } = this.state;
+    const subscription = {};
+    const { currentUser } = this.state;
     return (
       <div className="signupform">
         <h1 className="ui center aligned header">Login</h1>
         <div className="ui center aligned basic segment">
           <GoogleAuth createNewUser={false} />
           <div className="ui horizontal divider">OR</div>
-          <form
-            className="ui form attached fluid segment"
-            onSubmit={this.onFormSubmit}
-          >
-            <div className="ui stacked segment">
-              <div className="field">
-                <input
-                  type="email"
-                  value={email}
-                  placeholder="Email"
-                  onChange={(e) => this.setState({ email: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="field">
-                <input
-                  type="password"
-                  value={pass}
-                  placeholder="Password"
-                  onChange={(e) => this.setState({ pass: e.target.value })}
-                  required
-                />
-              </div>
-              <input type="submit" value="Submit" />
-            </div>
-          </form>
+          <Form
+            onSubmit={this.onSubmit}
+            subscription={subscription}
+            initialValues={{ email: '', password: '' }}
+            validate={(values) => {
+              const errors = {};
+              if (!values.email) {
+                errors.email = 'Required';
+              }
+              if (!values.password) {
+                errors.password = 'Required';
+              }
+              if (currentUser !== '' && currentUser.password !== values.password) {
+                errors.password = 'Email and Password do not match.';
+              }
+              return errors;
+            }}
+            render={({ handleSubmit, form, values, submitError }) => (
+              <form
+                className="ui form attached fluid segment"
+                onSubmit={handleSubmit}
+              >
+                <div className="ui stacked segment">
+                  <div className="field">
+                    <Field
+                      name="email"
+                      component="input"
+                      type="text"
+                      placeholder="Email"
+                    >
+                      {({ input, meta }) => (
+                        <div>
+                          <input {...input} placeholder="Email" />
+                          {(meta.error || meta.submitError) && meta.touched && (
+                            <span>{meta.error || meta.submitError}</span>
+                          )}
+                        </div>
+                      )}
+                    </Field>
+                  </div>
+                  <div className="field">
+                    <Field
+                      name="password"
+                      component="input"
+                      type="password"
+                      placeholder="Password"
+                    >
+                      {({ input, meta }) => (
+                        <div>
+                          <input {...input} placeholder="Password" />
+                          {meta.touched && meta.error && <span>{meta.error}</span>}
+                        </div>
+                      )}
+                    </Field>
+                  </div>
+                  <div>
+                    <button className="ui submit button" type="submit">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
+          />
           <div className="ui bottom attached warning message">
             Need an Account? <Link to="/signup/FinalForm">Sign Up</Link>
           </div>
@@ -71,4 +131,4 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(withRouter(Login));

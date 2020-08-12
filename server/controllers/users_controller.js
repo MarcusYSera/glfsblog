@@ -7,6 +7,13 @@ module.exports ={
       .catch(next)
   },
 
+  findByEmail(req, res, next){
+    const userEmail = req.params.email;
+    User.findOne({email: userEmail})
+      .then(user => res.send(user))
+      .catch(next)
+  },
+
   create(req, res, next){
     const userProps = req.body;
 
