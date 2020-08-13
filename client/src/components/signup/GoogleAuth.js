@@ -15,6 +15,25 @@ class GoogleAuth extends Component {
     };
   }
 
+  // async componentDidMount() {
+  //   const load = new Promise(function (resolve, reject) {
+  //     window.gapi.load('client:auth2', resolve);
+  //   });
+  //   return load.then(async () => {
+  //     return await window.gapi.client
+  //       .init({
+  //         clientId:
+  //           '497745475816-s1se1ef8qio68uoat80f87bdmmbmtg33.apps.googleusercontent.com',
+  //         scope: ('email', 'profile'),
+  //       })
+  //       .then((authInstance) => {
+  //         window.authInstance = authInstance;
+  //         console.log(window.authInstance);
+  //         this.onAuthChange()
+  //       });
+  //   });
+  // }
+
   componentDidMount() {
     window.gapi.load('client:auth2', () => {
       window.gapi.client
@@ -27,9 +46,11 @@ class GoogleAuth extends Component {
           this.auth = window.gapi.auth2.getAuthInstance();
           this.currentUser = this.auth.currentUser.get();
           this.userBasicInfo = this.currentUser.getBasicProfile();
+          console.log(this.auth);
 
           this.onAuthChange(this.auth.isSignedIn.get());
           this.auth.isSignedIn.listen(this.onAuthChange);
+          return;
         });
     });
   }
@@ -42,24 +63,37 @@ class GoogleAuth extends Component {
         this.currentUser.getId(),
         this.auth.currentUser.get().getBasicProfile().getGivenName()
       );
-
-      if (createNewUser) {
-        glfsBlogDB
-          .post('/api/users', {
-            gmailID: `${this.currentUser.getId()}`,
-            firstName: `${this.userBasicInfo.getGivenName()}`,
-            lastName: `${this.userBasicInfo.getFamilyName()}`,
-            email: `${this.userBasicInfo.getEmail()}`,
-            createdAt: `${new Date()}`,
-          })
-          .then((res) => {
-            console.log(res.status);
-          })
-          .catch((err) => {
-            // alert(err);
-            console.log(err);
-          });
-      }
+      glfsBlogDB
+        .get(
+          `/api/users/${this.auth.currentUser.get().getBasicProfile().getEmail()}`
+        )
+        .then((res) => {
+          if (res.data === '') {
+            console.log('new user signing in by google');
+            console.log(res.data);
+            if (createNewUser) {
+              console.log('will create new account');
+              glfsBlogDB
+                .post('/api/users', {
+                  gmailID: `${this.currentUser.getId()}`,
+                  firstName: `${this.userBasicInfo.getGivenName()}`,
+                  lastName: `${this.userBasicInfo.getFamilyName()}`,
+                  email: `${this.userBasicInfo.getEmail()}`,
+                  createdAt: `${new Date()}`,
+                })
+                .then((res) => {
+                  console.log(res.status);
+                  return;
+                })
+                .catch((err) => {
+                  // alert(err);
+                  console.log(err);
+                  return;
+                });
+            }
+          }
+          return;
+        });
       this.props.history.push('/');
     } else {
       signOutProp();
