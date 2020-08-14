@@ -75,10 +75,19 @@ class GoogleAuth extends Component {
               console.log('will create new account');
               glfsBlogDB
                 .post('/api/users', {
-                  gmailID: `${this.currentUser.getId()}`,
-                  firstName: `${this.userBasicInfo.getGivenName()}`,
-                  lastName: `${this.userBasicInfo.getFamilyName()}`,
-                  email: `${this.userBasicInfo.getEmail()}`,
+                  gmailID: `${this.auth.currentUser.get().getId()}`,
+                  firstName: `${this.auth.currentUser
+                    .get()
+                    .getBasicProfile()
+                    .getGivenName()}`,
+                  lastName: `${this.auth.currentUser
+                    .get()
+                    .getBasicProfile()
+                    .getFamilyName()}`,
+                  email: `${this.auth.currentUser
+                    .get()
+                    .getBasicProfile()
+                    .getEmail()}`,
                   createdAt: `${new Date()}`,
                 })
                 .then((res) => {
