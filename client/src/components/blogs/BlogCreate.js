@@ -25,13 +25,28 @@ class BlogCreate extends Component {
           onSubmit={this.onSubmit}
           initialValues={{ blogTitle: '' }}
           render={({ submitError, handleSubmit, form, values }) => (
-            <form className="ui large form">
+            <form className="ui large form" onSubmit={handleSubmit}>
               <div className="ui stacked segment">
                 <div className="field">
-                  <input type="text" placeholder="Blog Title" required />
+                  <Field name="blogTitle" component="input" type="text">
+                    {({ input, meta }) => (
+                      <div>
+                        <input {...input} placeholder="Blog Title" />
+                        {meta.touched && meta.error && <span>{meta.error}</span>}
+                      </div>
+                    )}
+                  </Field>
                 </div>
+
                 <div className="field">
-                  <input type="text" placeholder="Blog location" />
+                  <Field name="blogLocation" component="input" type="text">
+                    {({ input, meta }) => (
+                      <div>
+                        <input {...input} placeholder="Blog Location" />
+                        {meta.touched && meta.error && <span>{meta.error}</span>}
+                      </div>
+                    )}
+                  </Field>
                 </div>
                 <div className="field">
                   <input type="text" placeholder="Blog category/tags/sort" />
