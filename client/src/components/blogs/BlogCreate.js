@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Form, Field } from 'react-final-form';
+import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class BlogCreate extends Component {
   state = {
@@ -8,7 +11,7 @@ class BlogCreate extends Component {
     bloglinks: [],
     blogpicture: '',
     blogdescription: '',
-    blogbody: ''
+    blogbody: '',
   };
   render() {
     // const { blogtitle, bloglocations, blogtags, bloglinks, blogpicture, blogdescription, blogbody} = this.state
