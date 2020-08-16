@@ -3,6 +3,8 @@ import { Form, Field } from 'react-final-form';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import TextInput from './../finalformcomponents/TextInput';
+
 class BlogCreate extends Component {
   state = {
     blogtitle: '',
@@ -28,14 +30,7 @@ class BlogCreate extends Component {
             <form className="ui large form" onSubmit={handleSubmit}>
               <div className="ui stacked segment">
                 <div className="field">
-                  <Field name="blogTitle" component="input" type="text">
-                    {({ input, meta }) => (
-                      <div>
-                        <input {...input} placeholder="Blog Title" />
-                        {meta.touched && meta.error && <span>{meta.error}</span>}
-                      </div>
-                    )}
-                  </Field>
+                  <TextInput name="blogTitle" placeholder="Blog Title" />
                 </div>
 
                 <div className="field">
