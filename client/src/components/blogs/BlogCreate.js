@@ -18,33 +18,41 @@ class BlogCreate extends Component {
   onSubmit = (values) => {
     console.log(values);
   };
+
+  required = (value) => (value ? undefined : 'Required');
+
   render() {
+    const subscription = {};
     // const { blogtitle, bloglocations, blogtags, bloglinks, blogpicture, blogdescription, blogbody} = this.state
     return (
       <div className="column">
         <h1 className="ui header">Post New Blog</h1>
         <Form
           onSubmit={this.onSubmit}
+          subscription={subscription}
+          // validate={(values) => {
+          //   const errors = {};
+          //   return errors;
+          // }}
           initialValues={{ blogTitle: '' }}
           render={({ submitError, handleSubmit, form, values }) => (
             <form className="ui large form" onSubmit={handleSubmit}>
               <div className="ui stacked segment">
                 <div className="field">
-                  <TextInput name="blogTitle" placeholder="Blog Title" />
-                </div>
-
-                <div className="field">
-                  <Field name="blogLocation" component="input" type="text">
-                    {({ input, meta }) => (
-                      <div>
-                        <input {...input} placeholder="Blog Location" />
-                        {meta.touched && meta.error && <span>{meta.error}</span>}
-                      </div>
-                    )}
-                  </Field>
+                  <TextInput
+                    name="blogTitle"
+                    placeholder="Blog Title"
+                    validate={this.required}
+                  />
                 </div>
                 <div className="field">
-                  <input type="text" placeholder="Blog category/tags/sort" />
+                  <TextInput name="blogLocation" placeholder="Blog Location" />
+                </div>
+                <div className="field">
+                  <TextInput
+                    name="blogCategory"
+                    placeholder="Blog Category/Tags/Sort"
+                  />
                 </div>
                 <div className="field">
                   <input
