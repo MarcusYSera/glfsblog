@@ -3,14 +3,9 @@ import { Field } from 'react-final-form';
 
 const TextInput = (props) => {
   // const { validate } = props;
-  // console.log(validate);
+  // console.log(props);
   return (
-    <Field
-      name={props.name}
-      component={props.component}
-      // type="text"
-      validate={props.validate}
-    >
+    <Field name={props.name} component="input" validate={props.validate}>
       {({ input, meta }) => (
         <div>
           <input {...input} placeholder={props.placeholder} />

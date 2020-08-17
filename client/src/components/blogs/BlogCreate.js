@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Form, Field } from 'react-final-form';
-import { withRouter, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Form } from 'react-final-form';
+// import { withRouter, Link } from 'react-router-dom';
+// import { connect } from 'react-redux';
 
 import TextInput from './../finalformcomponents/TextInput';
+import TextAreaInput from './../finalformcomponents/TextAreaInput';
 
 class BlogCreate extends Component {
   state = {
@@ -21,7 +22,7 @@ class BlogCreate extends Component {
 
   required = (value) => (value ? undefined : 'Required');
   validURL = (value) =>
-    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(
+    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/gm.test(
       value
     )
       ? undefined
@@ -50,29 +51,22 @@ class BlogCreate extends Component {
                 <div className="field">
                   <TextInput
                     name="blogTitle"
-                    component="input"
                     placeholder="Blog Title"
                     validate={this.required}
                   />
                 </div>
                 <div className="field">
-                  <TextInput
-                    name="blogLocation"
-                    component="input"
-                    placeholder="Blog Location"
-                  />
+                  <TextInput name="blogLocation" placeholder="Blog Location" />
                 </div>
                 <div className="field">
                   <TextInput
                     name="blogCategory"
-                    component="input"
                     placeholder="Blog Category/Tags/Sort"
                   />
                 </div>
                 <div className="field">
                   <TextInput
                     name="url"
-                    component="input"
                     placeholder="https://example.com"
                     validate={this.composeValidators(this.required, this.validURL)}
                   />
@@ -81,25 +75,19 @@ class BlogCreate extends Component {
                   <input type="file" accept="image/png, image/jpeg" />
                 </div>
                 <div className="field">
-                  <TextInput
-                    name="blogDescription"
-                    component="input"
-                    placeholder="Blog Description"
-                  />
+                  <TextInput name="blogDescription" placeholder="Blog Description" />
                 </div>
                 <div className="field">
-                  <TextInput
-                    name="blogBody"
-                    component="textarea"
-                    placeholder="Blog Body"
-                  />
+                  <TextAreaInput name="blogbody" placeholder="Blog Body" />
                 </div>
                 <div className="field">
-                  <button>
+                  <button className="ui button">
                     Add category ie places to eat, places to see, advice, ect
                   </button>
                 </div>
-                <input type="submit" value="Post" />
+                <button className="ui submit button" type="submit">
+                  Submit
+                </button>
               </div>
             </form>
           )}
