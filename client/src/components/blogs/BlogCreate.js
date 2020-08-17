@@ -20,6 +20,15 @@ class BlogCreate extends Component {
   };
 
   required = (value) => (value ? undefined : 'Required');
+  validURL = (value) =>
+    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(
+      value
+    )
+      ? undefined
+      : 'Must be valid URL';
+  // validURL = (value) => (urlRegex.test(value) ? undefined : 'Must be valid URL');
+  composeValidators = (...validators) => (value) =>
+    validators.reduce((error, validator) => error || validator(value), undefined);
 
   render() {
     const subscription = {};
@@ -41,39 +50,48 @@ class BlogCreate extends Component {
                 <div className="field">
                   <TextInput
                     name="blogTitle"
+                    component="input"
                     placeholder="Blog Title"
                     validate={this.required}
                   />
                 </div>
                 <div className="field">
-                  <TextInput name="blogLocation" placeholder="Blog Location" />
+                  <TextInput
+                    name="blogLocation"
+                    component="input"
+                    placeholder="Blog Location"
+                  />
                 </div>
                 <div className="field">
                   <TextInput
                     name="blogCategory"
+                    component="input"
                     placeholder="Blog Category/Tags/Sort"
                   />
                 </div>
                 <div className="field">
-                  <input
-                    type="url"
+                  <TextInput
+                    name="url"
+                    component="input"
                     placeholder="https://example.com"
-                    pattern="https://.*"
-                    size="30"
+                    validate={this.composeValidators(this.required, this.validURL)}
                   />
                 </div>
                 <div className="field">
                   <input type="file" accept="image/png, image/jpeg" />
                 </div>
                 <div className="field">
-                  <input type="text" placeholder="Blog description" />
+                  <TextInput
+                    name="blogDescription"
+                    component="input"
+                    placeholder="Blog Description"
+                  />
                 </div>
                 <div className="field">
-                  <textarea
-                    type="text"
-                    placeholder="Blog body"
-                    rows="10"
-                    cols="50"
+                  <TextInput
+                    name="blogBody"
+                    component="textarea"
+                    placeholder="Blog Body"
                   />
                 </div>
                 <div className="field">
