@@ -5,7 +5,7 @@ import { Form, Field } from 'react-final-form';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { createUserAction } from '../../actions';
+import { signIn, createUserAction } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
 
@@ -15,6 +15,7 @@ class FinalForm extends Component {
   state = { existingUser: false };
 
   onSubmit = async (values) => {
+    const { signIn: signInProp } = this.props;
     await glfsBlogDB
       .get(`/api/users/${values.email}`)
       .then((res) => {
@@ -36,6 +37,7 @@ class FinalForm extends Component {
             })
             .then((res) => {
               console.log(res.status);
+              signInProp(true, null, values.firstName);
               this.props.history.push('/');
             })
             .catch((err) => {
@@ -227,4 +229,4 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-export default connect(mapStateToProps, { createUserAction })(withRouter(FinalForm));
+export default connect(mapStateToProps, { signIn, createUserAction })(withRouter(FinalForm));
