@@ -6,12 +6,12 @@ const TextInput = (props) => {
   const { component } = props;
   console.log(props);
   switch (component) {
-    case 'input':
+    case 'text':
       return (
         <div className="field">
           <Field
             name={props.name}
-            type={props.type}
+            type="text"
             component="input"
             validate={props.validate}
           >
@@ -22,6 +22,18 @@ const TextInput = (props) => {
               </div>
             )}
           </Field>
+        </div>
+      );
+    case 'checkbox':
+      return (
+        <div className="field">
+          <Field
+            name={props.name}
+            component="input"
+            type="checkbox"
+            value={props.value}
+          />
+          {props.children}
         </div>
       );
     case 'textarea':
@@ -59,6 +71,8 @@ const TextInput = (props) => {
           </Field>
         </div>
       );
+    default:
+      return null;
   }
   // return (
   // );

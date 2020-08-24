@@ -49,13 +49,17 @@ class BlogCreate extends Component {
             <form className="ui large form" onSubmit={handleSubmit}>
               <div className="ui stacked segment">
                 <TextInput
-                  component="selectMultiple"
+                  component="text"
                   // type="text"
                   name="test"
                   placeholder="test"
+                />
+                <TextInput
+                  component="checkbox"
+                  name="checkboxtest"
+                  value="checkboxtest"
                 >
-                  <option />
-                  <option value="red">red</option>
+                  Test
                 </TextInput>
                 {/* <div className="field">
                   <TextInput
