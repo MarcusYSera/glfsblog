@@ -4,7 +4,6 @@ import { Form } from 'react-final-form';
 // import { connect } from 'react-redux';
 
 import TextInput from './../finalformcomponents/TextInput';
-import TextAreaInput from './../finalformcomponents/TextAreaInput';
 
 class BlogCreate extends Component {
   // state = {
@@ -49,58 +48,58 @@ class BlogCreate extends Component {
             <form className="ui large form" onSubmit={handleSubmit}>
               <div className="ui stacked segment">
                 <TextInput
+                  name="blogTitle"
                   component="text"
-                  // type="text"
-                  name="test"
-                  placeholder="test"
+                  placeholder="Blog Title"
+                  validate={this.required}
                 />
+                {/* when I get a chance, see about hooking up google places here */}
+                <TextInput
+                  component="text"
+                  name="blogLocation"
+                  placeholder="Blog Location"
+                />
+                {/* swap out for checkboxes */}
+                <TextInput component="checkbox" name="blogCategory" value="food">
+                  Food
+                </TextInput>
+                <TextInput component="checkbox" name="blogCategory" value="travel">
+                  Travel
+                </TextInput>
                 <TextInput
                   component="checkbox"
-                  name="checkboxtest"
-                  value="checkboxtest"
+                  name="blogCategory"
+                  value="attraction"
                 >
-                  Test
+                  Attraction
                 </TextInput>
-                {/* <div className="field">
-                  <TextInput
-                    name="blogTitle"
-                    placeholder="Blog Title"
-                    validate={this.required}
-                  />
-                </div> */}
-                {/* <div className="field">
-                  <TextInput name="blogLocation" placeholder="Blog Location" />
-                </div> */}
-                {/* <div className="field">
-                  <TextInput
-                    name="blogCategory"
-                    placeholder="Blog Category/Tags/Sort"
-                  />
-                </div> */}
-                {/* <div className="field">
-                  <TextInput
-                    name="url"
-                    placeholder="https://example.com"
-                    validate={this.composeValidators(this.required, this.validURL)}
-                  />
-                </div> */}
-                {/* <div className="field">
+                <TextInput
+                  component="text"
+                  name="url"
+                  placeholder="https://example.com"
+                  validate={this.composeValidators(this.required, this.validURL)}
+                />
+                <div className="field">
                   <input type="file" accept="image/png, image/jpeg" />
-                </div> */}
-                {/* <div className="field">
-                  <TextInput name="blogDescription" placeholder="Blog Description" />
-                </div> */}
-                {/* <div className="field">
-                  <TextAreaInput name="blogbody" placeholder="Blog Body" />
-                </div> */}
+                </div>
+                <TextInput
+                  component="text"
+                  name="blogDescription"
+                  placeholder="Short Blog Description"
+                />
+                <TextInput
+                  component="textarea"
+                  name="blogbody"
+                  placeholder="Blog Body"
+                />
                 {/* <div className="field">
                   <button className="ui button">
                     Add category ie places to eat, places to see, advice, ect
                   </button>
                 </div> */}
-                <button className="ui submit button" type="submit">
-                  Submit
-                </button>
+                  <button className="ui submit button" type="submit">
+                    Submit
+                  </button>
               </div>
             </form>
           )}
