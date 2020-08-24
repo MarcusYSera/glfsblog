@@ -7,15 +7,15 @@ import TextInput from './../finalformcomponents/TextInput';
 import TextAreaInput from './../finalformcomponents/TextAreaInput';
 
 class BlogCreate extends Component {
-  state = {
-    blogtitle: '',
-    bloglocation: '',
-    blogtags: [],
-    bloglinks: [],
-    blogpicture: '',
-    blogdescription: '',
-    blogbody: '',
-  };
+  // state = {
+  //   blogtitle: '',
+  //   bloglocation: '',
+  //   blogtags: [],
+  //   bloglinks: [],
+  //   blogpicture: '',
+  //   blogdescription: '',
+  //   blogbody: '',
+  // };
   onSubmit = (values) => {
     console.log(values);
   };
@@ -48,43 +48,52 @@ class BlogCreate extends Component {
           render={({ submitError, handleSubmit, form, values }) => (
             <form className="ui large form" onSubmit={handleSubmit}>
               <div className="ui stacked segment">
-                <div className="field">
+                <TextInput
+                  component="selectMultiple"
+                  // type="text"
+                  name="test"
+                  placeholder="test"
+                >
+                  <option />
+                  <option value="red">red</option>
+                </TextInput>
+                {/* <div className="field">
                   <TextInput
                     name="blogTitle"
                     placeholder="Blog Title"
                     validate={this.required}
                   />
-                </div>
-                <div className="field">
+                </div> */}
+                {/* <div className="field">
                   <TextInput name="blogLocation" placeholder="Blog Location" />
-                </div>
-                <div className="field">
+                </div> */}
+                {/* <div className="field">
                   <TextInput
                     name="blogCategory"
                     placeholder="Blog Category/Tags/Sort"
                   />
-                </div>
-                <div className="field">
+                </div> */}
+                {/* <div className="field">
                   <TextInput
                     name="url"
                     placeholder="https://example.com"
                     validate={this.composeValidators(this.required, this.validURL)}
                   />
-                </div>
-                <div className="field">
+                </div> */}
+                {/* <div className="field">
                   <input type="file" accept="image/png, image/jpeg" />
-                </div>
-                <div className="field">
+                </div> */}
+                {/* <div className="field">
                   <TextInput name="blogDescription" placeholder="Blog Description" />
-                </div>
-                <div className="field">
+                </div> */}
+                {/* <div className="field">
                   <TextAreaInput name="blogbody" placeholder="Blog Body" />
-                </div>
-                <div className="field">
+                </div> */}
+                {/* <div className="field">
                   <button className="ui button">
                     Add category ie places to eat, places to see, advice, ect
                   </button>
-                </div>
+                </div> */}
                 <button className="ui submit button" type="submit">
                   Submit
                 </button>
