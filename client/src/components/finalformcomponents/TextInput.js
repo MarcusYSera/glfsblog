@@ -32,7 +32,7 @@ const TextInput = (props) => {
             component="input"
             type="checkbox"
             value={props.value}
-          />
+          />{' '}
           {props.children}
         </div>
       );
@@ -65,7 +65,9 @@ const TextInput = (props) => {
             name={props.name}
             component="select"
             placeholder={props.placeholder}
-            multiple
+            // multiple
+            className="ui fluid search dropdown"
+            multiple=""
           >
             {props.children}
           </Field>

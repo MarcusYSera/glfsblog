@@ -60,19 +60,30 @@ class BlogCreate extends Component {
                   placeholder="Blog Location"
                 />
                 {/* swap out for checkboxes */}
-                <TextInput component="checkbox" name="blogCategory" value="food">
-                  Food
-                </TextInput>
-                <TextInput component="checkbox" name="blogCategory" value="travel">
-                  Travel
-                </TextInput>
                 <TextInput
-                  component="checkbox"
+                  component="selectMultiple"
                   name="blogCategory"
-                  value="attraction"
+                  placeholder="Blog Category"
                 >
-                  Attraction
+                  <option value="">Blog Category</option>
+                  <option value="food">Food</option>
+                  <option value="travel">Travel</option>
+                  <option value="attraction">Attraction</option>
+                  <option value="historical">Historical</option>
+                  {/* <option value=""></option> */}
+                  {/* <option value=""></option> */}
                 </TextInput>
+                <div className="field">
+                  <select
+                    className="ui fluid search dropdown"
+                    name="category"
+                    multiple=""
+                  >
+                    <option>Category</option>
+                    <option>Food</option>
+                    <option>Travel</option>
+                  </select>
+                </div>
                 <TextInput
                   component="text"
                   name="url"
@@ -97,9 +108,9 @@ class BlogCreate extends Component {
                     Add category ie places to eat, places to see, advice, ect
                   </button>
                 </div> */}
-                  <button className="ui submit button" type="submit">
-                    Submit
-                  </button>
+                <button className="ui submit button" type="submit">
+                  Submit
+                </button>
               </div>
             </form>
           )}
