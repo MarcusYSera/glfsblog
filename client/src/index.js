@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Route,
+  // Redirect
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
@@ -44,7 +48,7 @@ ReactDOM.render(
             <Route path="/signup/login" component={Login} />
             <Route path="/signup/finalform" component={FinalForm} />
             <Route path="/admin/admin" component={Admin} />
-            <Redirect path='*' component={Home} />
+            {/* <Redirect path='*' component={Home} /> */}
           </div>
         </div>
       </div>

@@ -50,17 +50,18 @@ class BlogCreate extends Component {
                 <TextInput
                   name="blogTitle"
                   component="text"
-                  placeholder="Blog Title"
+                  placeholder="Title"
                   validate={this.required}
                 />
                 {/* when I get a chance, see about hooking up google places here */}
                 <TextInput
                   component="text"
                   name="blogLocation"
-                  placeholder="Blog Location"
+                  placeholder="Destination"
                 />
                 {/* swap out for checkboxes */}
-                <TextInput
+                {/* change this later to multiselect */}
+                {/* <TextInput
                   component="selectMultiple"
                   name="blogCategory"
                   placeholder="Blog Category"
@@ -70,24 +71,39 @@ class BlogCreate extends Component {
                   <option value="travel">Travel</option>
                   <option value="attraction">Attraction</option>
                   <option value="historical">Historical</option>
-                  {/* <option value=""></option> */}
-                  {/* <option value=""></option> */}
-                </TextInput>
-                <div className="field">
-                  <select
-                    className="ui fluid search dropdown"
-                    name="category"
-                    multiple=""
+                  <option value=""></option>
+                  <option value=""></option>
+                </TextInput> */}
+                <label>
+                  Categories, Choose All that Apply
+                  <TextInput component="checkbox" name="blogCategory" value="review">
+                    Review
+                  </TextInput>
+                  <TextInput component="checkbox" name="blogCategory" value="tips">
+                    Tips
+                  </TextInput>
+                  <TextInput
+                    component="checkbox"
+                    name="blogCategory"
+                    value="experience"
                   >
-                    <option>Category</option>
-                    <option>Food</option>
-                    <option>Travel</option>
-                  </select>
-                </div>
+                    Experience
+                  </TextInput>
+                  <TextInput component="checkbox" name="blogCategory" value="food">
+                    Food, Consider adding cost text input on check
+                  </TextInput>
+                  <TextInput
+                    component="checkbox"
+                    name="blogCategory"
+                    value="activity"
+                  >
+                    Activity, adding cost text input on check
+                  </TextInput>
+                </label>
                 <TextInput
                   component="text"
                   name="url"
-                  placeholder="https://example.com"
+                  placeholder="Helpful Links"
                   validate={this.composeValidators(this.required, this.validURL)}
                 />
                 <div className="field">
@@ -96,16 +112,16 @@ class BlogCreate extends Component {
                 <TextInput
                   component="text"
                   name="blogDescription"
-                  placeholder="Short Blog Description"
+                  placeholder="Short Description/Caption"
                 />
                 <TextInput
                   component="textarea"
                   name="blogbody"
-                  placeholder="Blog Body"
+                  placeholder="Start Writing Here"
                 />
                 {/* <div className="field">
                   <button className="ui button">
-                    Add category ie places to eat, places to see, advice, ect
+                    Add category ie places to eat, places to see, advice, associated cost for activity, ect
                   </button>
                 </div> */}
                 <button className="ui submit button" type="submit">
