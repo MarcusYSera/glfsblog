@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
-import { Form, Field } from 'react-final-form';
-import { withRouter, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Form } from 'react-final-form';
+// import { withRouter, Link } from 'react-router-dom';
+// import { connect } from 'react-redux';
 
 import TextInput from './../finalformcomponents/TextInput';
 
 class BlogCreate extends Component {
-  state = {
-    blogtitle: '',
-    bloglocation: '',
-    blogtags: [],
-    bloglinks: [],
-    blogpicture: '',
-    blogdescription: '',
-    blogbody: '',
-  };
+  // state = {
+  //   blogtitle: '',
+  //   bloglocation: '',
+  //   blogtags: [],
+  //   bloglinks: [],
+  //   blogpicture: '',
+  //   blogdescription: '',
+  //   blogbody: '',
+  // };
   onSubmit = (values) => {
     console.log(values);
   };
 
   required = (value) => (value ? undefined : 'Required');
   validURL = (value) =>
-    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm.test(
+    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/gm.test(
       value
     )
       ? undefined
@@ -47,59 +47,86 @@ class BlogCreate extends Component {
           render={({ submitError, handleSubmit, form, values }) => (
             <form className="ui large form" onSubmit={handleSubmit}>
               <div className="ui stacked segment">
-                <div className="field">
+                <TextInput
+                  name="blogTitle"
+                  component="text"
+                  placeholder="Title"
+                  validate={this.required}
+                />
+                {/* when I get a chance, see about hooking up google places here */}
+                <TextInput
+                  component="text"
+                  name="blogLocation"
+                  placeholder="Destination"
+                />
+                {/* swap out for checkboxes */}
+                {/* change this later to multiselect */}
+                {/* <TextInput
+                  component="selectMultiple"
+                  name="blogCategory"
+                  placeholder="Blog Category"
+                >
+                  <option value="">Blog Category</option>
+                  <option value="food">Food</option>
+                  <option value="travel">Travel</option>
+                  <option value="attraction">Attraction</option>
+                  <option value="historical">Historical</option>
+                  <option value=""></option>
+                  <option value=""></option>
+                </TextInput> */}
+                <label>
+                  Categories, Choose All that Apply
+                  <TextInput component="checkbox" name="blogCategory" value="review">
+                    Review
+                  </TextInput>
+                  <TextInput component="checkbox" name="blogCategory" value="tips">
+                    Tips
+                  </TextInput>
                   <TextInput
-                    name="blogTitle"
-                    component="input"
-                    placeholder="Blog Title"
-                    validate={this.required}
-                  />
-                </div>
-                <div className="field">
-                  <TextInput
-                    name="blogLocation"
-                    component="input"
-                    placeholder="Blog Location"
-                  />
-                </div>
-                <div className="field">
-                  <TextInput
+                    component="checkbox"
                     name="blogCategory"
-                    component="input"
-                    placeholder="Blog Category/Tags/Sort"
-                  />
-                </div>
-                <div className="field">
+                    value="experience"
+                  >
+                    Experience
+                  </TextInput>
+                  <TextInput component="checkbox" name="blogCategory" value="food">
+                    Food, Consider adding cost text input on check
+                  </TextInput>
                   <TextInput
-                    name="url"
-                    component="input"
-                    placeholder="https://example.com"
-                    validate={this.composeValidators(this.required, this.validURL)}
-                  />
-                </div>
+                    component="checkbox"
+                    name="blogCategory"
+                    value="activity"
+                  >
+                    Activity, adding cost text input on check
+                  </TextInput>
+                </label>
+                <TextInput
+                  component="text"
+                  name="url"
+                  placeholder="Helpful Links"
+                  validate={this.composeValidators(this.required, this.validURL)}
+                />
                 <div className="field">
                   <input type="file" accept="image/png, image/jpeg" />
                 </div>
-                <div className="field">
-                  <TextInput
-                    name="blogDescription"
-                    component="input"
-                    placeholder="Blog Description"
-                  />
-                </div>
-                <div className="field">
-                  <TextInput
-                    name="blogBody"
-                    component="textarea"
-                    placeholder="Blog Body"
-                  />
-                </div>
-                <div className="field">
-                  <button>
-                    Add category ie places to eat, places to see, advice, ect
+                <TextInput
+                  component="text"
+                  name="blogDescription"
+                  placeholder="Short Description/Caption"
+                />
+                <TextInput
+                  component="textarea"
+                  name="blogbody"
+                  placeholder="Start Writing Here"
+                />
+                {/* <div className="field">
+                  <button className="ui button">
+                    Add category ie places to eat, places to see, advice, associated cost for activity, ect
                   </button>
-                </div>
-                <input type="submit" value="Post" />
+                </div> */}
+                <button className="ui submit button" type="submit">
+                  Submit
+                </button>
               </div>
             </form>
           )}

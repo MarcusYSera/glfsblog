@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Route,
+  // Redirect
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
@@ -16,7 +20,6 @@ import BlogCreate from './components/blogs/BlogCreate';
 import BlogEdit from './components/blogs/BlogEdit';
 import BlogDelete from './components/blogs/BlogDelete';
 import Login from './components/signup/Login';
-// import SignUp from './components/signup/SignUp';
 import Admin from './components/admin/Admin';
 import FinalForm from './components/signup/FinalForm';
 
@@ -43,9 +46,9 @@ ReactDOM.render(
             <Route path="/blogs/view/:id" component={BlogShow} />
             <Route path="/blogs/delete/:id" component={BlogDelete} />
             <Route path="/signup/login" component={Login} />
-            {/* <Route path="/signup/signup" component={SignUp} /> */}
             <Route path="/signup/finalform" component={FinalForm} />
             <Route path="/admin/admin" component={Admin} />
+            {/* <Redirect path='*' component={Home} /> */}
           </div>
         </div>
       </div>
