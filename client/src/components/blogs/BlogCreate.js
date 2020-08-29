@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from 'react-final-form';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 // import { withRouter, Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 
@@ -32,6 +34,11 @@ class BlogCreate extends Component {
 
   render() {
     const subscription = {};
+    const options = [
+      { value: 'food', label: 'Food' },
+      { value: 'travel', label: 'Travel' },
+    ];
+    const animatedComponents = makeAnimated();
     // const { blogtitle, bloglocations, blogtags, bloglinks, blogpicture, blogdescription, blogbody} = this.state
     return (
       <div className="column">
@@ -74,32 +81,14 @@ class BlogCreate extends Component {
                   <option value=""></option>
                   <option value=""></option>
                 </TextInput> */}
-                <label>
-                  Categories, Choose All that Apply
-                  <TextInput component="checkbox" name="blogCategory" value="review">
-                    Review
-                  </TextInput>
-                  <TextInput component="checkbox" name="blogCategory" value="tips">
-                    Tips
-                  </TextInput>
-                  <TextInput
-                    component="checkbox"
-                    name="blogCategory"
-                    value="experience"
-                  >
-                    Experience
-                  </TextInput>
-                  <TextInput component="checkbox" name="blogCategory" value="food">
-                    Food, Consider adding cost text input on check
-                  </TextInput>
-                  <TextInput
-                    component="checkbox"
-                    name="blogCategory"
-                    value="activity"
-                  >
-                    Activity, adding cost text input on check
-                  </TextInput>
-                </label>
+                <Select
+                  className="field"
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  options={options}
+                  placeholder="Category"
+                />
                 <TextInput
                   component="text"
                   name="url"
