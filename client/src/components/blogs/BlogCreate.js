@@ -37,6 +37,12 @@ class BlogCreate extends Component {
     const options = [
       { value: 'food', label: 'Food' },
       { value: 'travel', label: 'Travel' },
+      { value: 'experience', label: 'Experience' },
+      { value: 'review', label: 'Review' },
+      { value: 'travelTips', label: 'Travel Tips' },
+      { value: 'destination', label: 'Destination' },
+      { value: 'mustSee', label: 'Must See' },
+      // { value: '', label: '' },
     ];
     const animatedComponents = makeAnimated();
     // const { blogtitle, bloglocations, blogtags, bloglinks, blogpicture, blogdescription, blogbody} = this.state
@@ -66,21 +72,6 @@ class BlogCreate extends Component {
                   name="blogLocation"
                   placeholder="Destination"
                 />
-                {/* swap out for checkboxes */}
-                {/* change this later to multiselect */}
-                {/* <TextInput
-                  component="selectMultiple"
-                  name="blogCategory"
-                  placeholder="Blog Category"
-                >
-                  <option value="">Blog Category</option>
-                  <option value="food">Food</option>
-                  <option value="travel">Travel</option>
-                  <option value="attraction">Attraction</option>
-                  <option value="historical">Historical</option>
-                  <option value=""></option>
-                  <option value=""></option>
-                </TextInput> */}
                 <Select
                   className="field"
                   closeMenuOnSelect={false}
