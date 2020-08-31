@@ -76,7 +76,12 @@ class BlogCreate extends Component {
                   name="blogLocation"
                   placeholder="Destination"
                 />
-                <Field component={this.finalFormSelectAdapter} name="blogCategory" />
+                <Field
+                  component={this.finalFormSelectAdapter}
+                  options={options}
+                  isMulti
+                  name="blogCategory"
+                />
                 <Select
                   className="field"
                   closeMenuOnSelect={false}
@@ -89,7 +94,7 @@ class BlogCreate extends Component {
                   component="text"
                   name="url"
                   placeholder="Helpful Links"
-                  validate={this.composeValidators(this.required, this.validURL)}
+                  // validate={this.composeValidators(this.validURL)}
                 />
                 <div className="field">
                   <input type="file" accept="image/png, image/jpeg" />
