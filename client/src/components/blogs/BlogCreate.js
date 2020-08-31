@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form } from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 // import { withRouter, Link } from 'react-router-dom';
@@ -20,6 +20,10 @@ class BlogCreate extends Component {
   onSubmit = (values) => {
     console.log(values);
   };
+
+  finalFormSelectAdapter = ({ input, ...rest }) => (
+    <Select {...input} {...rest} searchable />
+  );
 
   required = (value) => (value ? undefined : 'Required');
   validURL = (value) =>
@@ -72,6 +76,7 @@ class BlogCreate extends Component {
                   name="blogLocation"
                   placeholder="Destination"
                 />
+                <Field component={this.finalFormSelectAdapter} name="blogCategory" />
                 <Select
                   className="field"
                   closeMenuOnSelect={false}
