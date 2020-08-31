@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Form, Field } from 'react-final-form';
+import { Form } from 'react-final-form';
 import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
+// import makeAnimated from 'react-select/animated';
 // import { withRouter, Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 
@@ -21,9 +21,10 @@ class BlogCreate extends Component {
     console.log(values);
   };
 
-  finalFormSelectAdapter = ({ input, ...rest }) => (
-    <Select {...input} {...rest} searchable />
-  );
+  finalFormSelectAdapter = ({ input, ...rest }) => {
+    console.log({ ...rest });
+    return <Select {...input} {...rest} searchable />;
+  };
 
   required = (value) => (value ? undefined : 'Required');
   validURL = (value) =>
@@ -48,7 +49,7 @@ class BlogCreate extends Component {
       { value: 'mustSee', label: 'Must See' },
       // { value: '', label: '' },
     ];
-    const animatedComponents = makeAnimated();
+    // const animatedComponents = makeAnimated();
     // const { blogtitle, bloglocations, blogtags, bloglinks, blogpicture, blogdescription, blogbody} = this.state
     return (
       <div className="column">
@@ -76,19 +77,10 @@ class BlogCreate extends Component {
                   name="blogLocation"
                   placeholder="Destination"
                 />
-                <Field
-                  component={this.finalFormSelectAdapter}
-                  options={options}
-                  isMulti
+                <TextInput
                   name="blogCategory"
-                />
-                <Select
-                  className="field"
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
+                  component="selectMultiple"
                   options={options}
-                  placeholder="Category"
                 />
                 <TextInput
                   component="text"
