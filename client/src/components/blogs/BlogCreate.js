@@ -69,7 +69,7 @@ class BlogCreate extends Component {
                   name="blogTitle"
                   component="text"
                   placeholder="Title"
-                  validate={this.required}
+                  // validate={this.required}
                 />
                 {/* when I get a chance, see about hooking up google places here */}
                 <TextInput
@@ -119,3 +119,6 @@ class BlogCreate extends Component {
 }
 
 export default BlogCreate;
+
+// Good Reference for adapter use & mapping for select options
+// https://codesandbox.io/s/40mr0v2r87?file=/index.js:1114-1122
