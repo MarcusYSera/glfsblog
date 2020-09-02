@@ -8,30 +8,8 @@ import { signIn, signOut, createUserAction } from '../../actions';
 import glfsBlogDB from '../../apis/glfsBlogDB';
 
 class GoogleAuth extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      createNewUser: props.createNewUser,
-    };
-  }
-
-  // async componentDidMount() {
-  //   const load = new Promise(function (resolve, reject) {
-  //     window.gapi.load('client:auth2', resolve);
-  //   });
-  //   return load.then(async () => {
-  //     return await window.gapi.client
-  //       .init({
-  //         clientId:
-  //           '497745475816-s1se1ef8qio68uoat80f87bdmmbmtg33.apps.googleusercontent.com',
-  //         scope: ('email', 'profile'),
-  //       })
-  //       .then((authInstance) => {
-  //         window.authInstance = authInstance;
-  //         console.log(window.authInstance);
-  //         this.onAuthChange()
-  //       });
-  //   });
+  // constructor(props) {
+  //   super(props);
   // }
 
   componentDidMount() {
@@ -39,13 +17,14 @@ class GoogleAuth extends Component {
       window.gapi.client
         .init({
           clientId:
-            '497745475816-s1se1ef8qio68uoat80f87bdmmbmtg33.apps.googleusercontent.com',
+            // '497745475816-s1se1ef8qio68uoat80f87bdmmbmtg33.apps.googleusercontent.com',
+            '497745475816-ndjdnh1jmcd3og0a5j10teru22kpejnq.apps.googleusercontent.com',
           scope: ('email', 'profile'),
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
           this.currentUser = this.auth.currentUser.get();
-          this.userBasicInfo = this.currentUser.getBasicProfile();
+          // this.userBasicInfo = this.currentUser.getBasicProfile();
           console.log(this.auth);
 
           this.onAuthChange(this.auth.isSignedIn.get());
@@ -120,7 +99,8 @@ class GoogleAuth extends Component {
   renderAuthButton() {
     const { isSignedIn } = this.props;
     if (isSignedIn === null) {
-      return null;
+      // return null;
+      return <div>I don't know if we are signed in</div>;
     }
     if (isSignedIn) {
       return (
@@ -164,7 +144,6 @@ GoogleAuth.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  // console.log(state);
   return { isSignedIn: state.auth.isSignedIn };
 };
 

@@ -1,5 +1,11 @@
 import React from 'react';
 import { Field } from 'react-final-form';
+import Select from 'react-select';
+
+const finalFormSelectAdapter = ({ input, ...rest }) => {
+  // console.log({...rest});
+  return <Select {...input} {...rest} searchable />;
+};
 
 const TextInput = (props) => {
   // const { validate } = props;
@@ -63,14 +69,11 @@ const TextInput = (props) => {
         <div className="field">
           <Field
             name={props.name}
-            component="select"
-            placeholder={props.placeholder}
-            // multiple
-            className="ui fluid search dropdown"
-            multiple=""
-          >
-            {props.children}
-          </Field>
+            options={props.options}
+            component={finalFormSelectAdapter}
+            isMulti
+            closeMenuOnSelect={false}
+          />
         </div>
       );
     default:

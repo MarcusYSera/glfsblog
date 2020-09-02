@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from 'react-final-form';
 import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
+// import makeAnimated from 'react-select/animated';
 // import { withRouter, Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 
@@ -21,6 +21,11 @@ class BlogCreate extends Component {
     console.log(values);
   };
 
+  finalFormSelectAdapter = ({ input, ...rest }) => {
+    console.log({ ...rest });
+    return <Select {...input} {...rest} searchable />;
+  };
+
   required = (value) => (value ? undefined : 'Required');
   validURL = (value) =>
     /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/gm.test(
@@ -37,8 +42,14 @@ class BlogCreate extends Component {
     const options = [
       { value: 'food', label: 'Food' },
       { value: 'travel', label: 'Travel' },
+      { value: 'experience', label: 'Experience' },
+      { value: 'review', label: 'Review' },
+      { value: 'travelTips', label: 'Travel Tips' },
+      { value: 'destination', label: 'Destination' },
+      { value: 'mustSee', label: 'Must See' },
+      // { value: '', label: '' },
     ];
-    const animatedComponents = makeAnimated();
+    // const animatedComponents = makeAnimated();
     // const { blogtitle, bloglocations, blogtags, bloglinks, blogpicture, blogdescription, blogbody} = this.state
     return (
       <div className="column">
@@ -58,7 +69,7 @@ class BlogCreate extends Component {
                   name="blogTitle"
                   component="text"
                   placeholder="Title"
-                  validate={this.required}
+                  // validate={this.required}
                 />
                 {/* when I get a chance, see about hooking up google places here */}
                 <TextInput
@@ -66,34 +77,16 @@ class BlogCreate extends Component {
                   name="blogLocation"
                   placeholder="Destination"
                 />
-                {/* swap out for checkboxes */}
-                {/* change this later to multiselect */}
-                {/* <TextInput
-                  component="selectMultiple"
+                <TextInput
                   name="blogCategory"
-                  placeholder="Blog Category"
-                >
-                  <option value="">Blog Category</option>
-                  <option value="food">Food</option>
-                  <option value="travel">Travel</option>
-                  <option value="attraction">Attraction</option>
-                  <option value="historical">Historical</option>
-                  <option value=""></option>
-                  <option value=""></option>
-                </TextInput> */}
-                <Select
-                  className="field"
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
+                  component="selectMultiple"
                   options={options}
-                  placeholder="Category"
                 />
                 <TextInput
                   component="text"
                   name="url"
                   placeholder="Helpful Links"
-                  validate={this.composeValidators(this.required, this.validURL)}
+                  // validate={this.composeValidators(this.validURL)}
                 />
                 <div className="field">
                   <input type="file" accept="image/png, image/jpeg" />
@@ -126,3 +119,6 @@ class BlogCreate extends Component {
 }
 
 export default BlogCreate;
+
+// Good Reference for adapter use & mapping for select options
+// https://codesandbox.io/s/40mr0v2r87?file=/index.js:1114-1122
